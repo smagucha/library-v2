@@ -1,0 +1,9 @@
+{%extends 'library/base.html'%}
+{%block content%}
+    are you are sure you want to delete
+<form action=""method="post">
+    {%csrf_token%}
+    {{object.name}}
+    <input type="submit" value=" delete">
+</form>
+{%endblock%}
