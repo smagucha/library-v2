@@ -1,0 +1,7 @@
+{% extends 'libraryv2/base.html' %}
+{%block content%}
+{% for obj in obj %}
+  {{forloop.counter}}
+  {{obj.title}}
+{% endfor %}
+{%endblock%}

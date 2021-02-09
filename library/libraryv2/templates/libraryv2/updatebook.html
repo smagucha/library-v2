@@ -11,7 +11,7 @@
       </div>
 
       <div class="col-75">
-        <input type="text" id="id_title" name="title" placeholder="title..." required id="id_title">
+        <input type="text" id="id_title" name="title"  value={{obj.title}} placeholder="title..." required id="id_title">
       </div>
 
     </div>
@@ -23,7 +23,7 @@
       </div>
 
       <div class="col-75">
-        <input type="text" id="id_subject" name="subject" placeholder="subject...." required id='id_subject'>
+        <input type="text" id="id_subject" name="subject" value={{obj.subject}} placeholder="subject...." required id='id_subject'>
       </div>
 
     </div>
@@ -35,7 +35,7 @@
       </div>
 
       <div class="col-75">
-        <input type="text" id="id_publisher" name="publisher" placeholder="publisher...." required id='id_publisher'>
+        <input type="text" id="id_publisher" name="publisher"value={{obj.publisher}} placeholder="publisher...." required id='id_publisher'>
       </div>
 
     </div>
@@ -46,7 +46,7 @@
       </div>
 
       <div class="col-75">
-        <input type="text" id="id_authors" name="authors" placeholder="authors...." required id="id_authors">
+        <input type="text" id="id_authors" name="authors" value={{obj.authors}} placeholder="authors...." required id="id_authors">
       </div>
 
     </div>
@@ -54,11 +54,11 @@
      <div class="row">
 
       <div class="col-25">
-        <label for="id_nobooks">No books</label>
+        <label for="id_nobooks">Number books</label>
       </div>
 
       <div class="col-75">
-        <input type="text" id="id_nobooks" name="nobooks" placeholder="no books...." required id="id_nobooks">
+        <input type="text" id="id_nobooks" name="nobooks" value={{obj.nobooks}} placeholder="no books...." required id="id_nobooks">
       </div>
 
      </div>
@@ -69,6 +69,7 @@
 			
 </form>
 </div>
-</div>
-
+<!-- <form method="post">
+  {{form}}
+</form> -->
 {%endblock%}

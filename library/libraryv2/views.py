@@ -1,11 +1,14 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Book
 from .forms import BookForm
+from django.views.generic.list import ListView
+from django.db import models
 
-def Book(request):
+
+def bookform(request):
 	form = BookForm(request.POST)
 	if request.method == 'POST':
-		orm = BookForm(request.POST)
+		form = BookForm(request.POST)
 		if form.is_valid():
 			form.save()
 			print(form)
@@ -15,9 +18,50 @@ def Book(request):
 		form = BookForm()
 	return render(request, 'libraryv2/book_form.html', {'form': form})
 
+def allbook(request):
+	obj= Book.objects.all()
+	print (obj)
+	context={
+	'obj': obj
+	}
+	return render(request, 'libraryv2/list_books.html', context)
+
+def DeleteBook(request, id):
+    delobj = Book.objects.get(id=id)
+    if request.method == 'POST':
+        delobj.delete()
+        return redirect('vieworder')
+    context = {
+        'delobj': delobj
+    }
+    return render(request, 'libraryv2/deletebook.html', context)
+
+def Updatebook(request, id):
+	obj = Book.objects.get(id=id)
+	form = BookForm(request.POST or None, instance= obj)
+	if form.is_valid():
+		form.save()
+		form= BookForm()
+		return redirect('allbook')
+	return render(request, 'libraryv2/updatebook.html', 
+		{'obj':obj,'form': form})
 
 
 
+# def updatesales(request, id):
+#     if request.user.is_authenticated:
+#         updateoj = sale.objects.get(id=id)
+#         updateoj = salesform(request.POST or None, instance=updateoj)
+#         if updateoj.is_valid():
+#             updateoj.save()
+#             updateoj = salesform()
+#             return redirect('sales_view')
+#         context = {
+#             'updateoj': updateoj
+#         }
+#         return render(request, 'sales/updatesales.html', context)
+#     else:
+#         return redirect('login')
 
 
 
