@@ -127,6 +127,8 @@ class Book(models.Model):
 	publisher = models.CharField(max_length= 200)
 	authors = models.CharField(max_length= 200)
 	nobooks = models.PositiveIntegerField()
+	def __str__(self):
+ 		return self.title
 	 
 class Rack(models.Model):
 	location_identifier = models.CharField(max_length= 300)
@@ -138,5 +140,7 @@ class BookItem(models.Model):
  	price = models.PositiveIntegerField()
  	book_format = models.ForeignKey(BookStatus, on_delete=models.CASCADE)
  	rack =models.ForeignKey(Rack, on_delete= models.CASCADE)
+
+ 	
   	
  

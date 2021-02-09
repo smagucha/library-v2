@@ -4,16 +4,16 @@ from .forms import BookForm
 
 def Book(request):
 	form = BookForm(request.POST)
-	if form.is_valid():
-		form.save()
-		form = BookForm()
-		return render(request, 'libraryv2/book_form.html')
+	if request.method == 'POST':
+		orm = BookForm(request.POST)
+		if form.is_valid():
+			form.save()
+			print(form)
+			form = BookForm()
+			return render(request, 'libraryv2/book_form.html')
 	else:
-		else:
-            form = orderusform()
-        return render(request, 'libraryv2/book_form.html', {'form': form})
-
-
+		form = BookForm()
+	return render(request, 'libraryv2/book_form.html', {'form': form})
 
 
 
