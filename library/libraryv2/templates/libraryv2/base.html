@@ -4,9 +4,35 @@
 <head>
 	<title></title>
 	<link rel="stylesheet" href="static/main.css">
+
 </head>
 <body>
+	<div class="topnav" id="myTopnav">
+	  <a href="/" class="active">Home</a>
+	  <a href="#news">News</a>
+	  <a href="#contact">Contact</a>
+	  <a href="#about">About</a>
+	  <a href="#login" style="float: right">login</a>
+	  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+	    <i class="fa fa-bars"></i>
+	  </a>
+</div>
+
 	{%block content%}
 	{%endblock%}
+
+<script>
+function myFunction() {
+  var x = document.getElementById("myTopnav");
+  if (x.className === "topnav") {
+    x.className += " responsive";
+  } else {
+    x.className = "topnav";
+  }
+}
+</script>
+<div class="footer">
+  <h2>Footer</h2>
+</div>
 </body>
 </html>

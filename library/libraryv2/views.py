@@ -46,6 +46,9 @@ def Updatebook(request, id):
 	return render(request, 'libraryv2/updatebook.html', 
 		{'obj':obj,'form': form})
 
+def home(request):
+  return render(request, 'libraryv2/home.html')
+
 
 
 # def updatesales(request, id):
