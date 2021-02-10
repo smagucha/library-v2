@@ -1,7 +1,36 @@
 {% extends 'libraryv2/base.html' %}
 {%block content%}
-{% for obj in obj %}
-  {{forloop.counter}}
-  {{obj.title}}
-{% endfor %}
+<link rel="stylesheet" href="static/table.css">
+<center>
+<table class="styled-table">
+    <thead>
+        <tr>
+        	<th>No</th>
+            <th>Title</th>
+            <th>Subject</th>
+            <th>Publisher</th>
+            <th>Author</th>
+            <th>No of books</th>
+            <th>Update</th>
+            <th>delete</th>
+ 
+        </tr>
+    </thead>
+    <tbody>
+    	{% for obj in obj %}
+        <tr>
+            <td>  {{forloop.counter}}</td>
+            <td> {{obj.title}}</td>
+            <td> {{obj.subject}}</td>
+            <td> {{obj.publisher}}</td>
+            <td> {{obj.authors}}</td>
+            <td> {{obj.nobooks}}</td>
+            <td><a href="updatebook/{{obj.id}}/update" class="updatelink">update</a></td>
+            <td><a href="deletebook/{{obj.id}}/delete" class="deletelink">delete</a></td>
+        </tr>
+         {% endfor %}
+    </tbody>
+</table>
+<a href="bookform" class="button">add book</a>
+</center>
 {%endblock%}

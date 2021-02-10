@@ -1,11 +1,11 @@
-{%extends 'libraryv2/base.html'%}
+{% extends 'libraryv2/base.html' %}
 {%load static%}
 {%block content%}
 <div class='container'>
-	<form method = "post">
-		{% csrf_token %}
-	
-	<div class="row">
+  <form method = "post">
+    {% csrf_token %}
+  
+  <div class="row">
       <div class="col-25">
         <label for="id_title">Title</label>
       </div>
@@ -66,10 +66,7 @@
      <div class="row">
       <input type="submit" value="Submit">
     </div>
-			
+      
 </form>
 </div>
-<!-- <form method="post">
-  {{form}}
-</form> -->
 {%endblock%}

@@ -43,8 +43,7 @@ def Updatebook(request, id):
 		form.save()
 		form= BookForm()
 		return redirect('allbook')
-	return render(request, 'libraryv2/updatebook.html', 
-		{'obj':obj,'form': form})
+	return render(request, 'libraryv2/updatebook.html', {'obj':obj,'form': form})
 
 def home(request):
   return render(request, 'libraryv2/home.html')

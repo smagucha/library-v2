@@ -1,7 +1,7 @@
-{%extends 'libraryv2/base.html'%}
+{% extends 'libraryv2/base.html'%}
 {%load static%}
-{% block content %}
-	<form method="post">
+{%block content%}
+<form method="post">
 		{% csrf_token %}
 		<p>Are you sure you want to delete "{{ object }}"?</p>
 		<input type="submit" value="Confirm">
