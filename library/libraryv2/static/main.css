@@ -133,7 +133,7 @@ input[type=submit]:hover {
   background-color: grey; /* Green */
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 10px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
@@ -143,7 +143,7 @@ input[type=submit]:hover {
   background-color: red; /* Green */
   border: none;
   color: white;
-  padding: 15px 32px;
+  padding: 10px 32px;
   text-align: center;
   text-decoration: none;
   display: inline-block;

@@ -1,69 +1,69 @@
-from django.shortcuts import render, redirect
-from .models import Book
-from .forms import BookForm
-from django.views.generic.list import ListView
-from django.db import models
+# from django.shortcuts import render, redirect
+# from .models import Book
+# from .forms import BookForm
+# from django.views.generic.list import ListView
+# from django.db import models
 
 
-def bookform(request):
-	form = BookForm(request.POST)
-	if request.method == 'POST':
-		form = BookForm(request.POST)
-		if form.is_valid():
-			form.save()
-			print(form)
-			form = BookForm()
-			return render(request, 'libraryv2/book_form.html')
-	else:
-		form = BookForm()
-	return render(request, 'libraryv2/book_form.html', {'form': form})
+# def bookform(request):
+# 	form = BookForm(request.POST)
+# 	if request.method == 'POST':
+# 		form = BookForm(request.POST)
+# 		if form.is_valid():
+# 			form.save()
+# 			print(form)
+# 			form = BookForm()
+# 			return render(request, 'libraryv2/book_form.html')
+# 	else:
+# 		form = BookForm()
+# 	return render(request, 'libraryv2/book_form.html', {'form': form})
 
-def allbook(request):
-	obj= Book.objects.all()
-	print (obj)
-	context={
-	'obj': obj
-	}
-	return render(request, 'libraryv2/list_books.html', context)
+# def allbook(request):
+# 	obj= Book.objects.all()
+# 	print (obj)
+# 	context={
+# 	'obj': obj
+# 	}
+# 	return render(request, 'libraryv2/list_books.html', context)
 
-def DeleteBook(request, id):
-    delobj = Book.objects.get(id=id)
-    if request.method == 'POST':
-        delobj.delete()
-        return redirect('vieworder')
-    context = {
-        'delobj': delobj
-    }
-    return render(request, 'libraryv2/deletebook.html', context)
+# def DeleteBook(request, id):
+#     delobj = Book.objects.get(id=id)
+#     if request.method == 'POST':
+#         delobj.delete()
+#         return redirect('vieworder')
+#     context = {
+#         'delobj': delobj
+#     }
+#     return render(request, 'libraryv2/deletebook.html', context)
 
-def Updatebook(request, id):
-	obj = Book.objects.get(id=id)
-	form = BookForm(request.POST or None, instance= obj)
-	if form.is_valid():
-		form.save()
-		form= BookForm()
-		return redirect('allbook')
-	return render(request, 'libraryv2/updatebook.html', {'obj':obj,'form': form})
+# def Updatebook(request, id):
+# 	obj = Book.objects.get(id=id)
+# 	form = BookForm(request.POST or None, instance= obj)
+# 	if form.is_valid():
+# 		form.save()
+# 		form= BookForm()
+# 		return redirect('allbook')
+# 	return render(request, 'libraryv2/updatebook.html', {'obj':obj,'form': form})
 
-def home(request):
-  return render(request, 'libraryv2/home.html')
+# def home(request):
+#   return render(request, 'libraryv2/home.html')
 
 
 
-# def updatesales(request, id):
-#     if request.user.is_authenticated:
-#         updateoj = sale.objects.get(id=id)
-#         updateoj = salesform(request.POST or None, instance=updateoj)
-#         if updateoj.is_valid():
-#             updateoj.save()
-#             updateoj = salesform()
-#             return redirect('sales_view')
-#         context = {
-#             'updateoj': updateoj
-#         }
-#         return render(request, 'sales/updatesales.html', context)
-#     else:
-#         return redirect('login')
+# # def updatesales(request, id):
+# #     if request.user.is_authenticated:
+# #         updateoj = sale.objects.get(id=id)
+# #         updateoj = salesform(request.POST or None, instance=updateoj)
+# #         if updateoj.is_valid():
+# #             updateoj.save()
+# #             updateoj = salesform()
+# #             return redirect('sales_view')
+# #         context = {
+# #             'updateoj': updateoj
+# #         }
+# #         return render(request, 'sales/updatesales.html', context)
+# #     else:
+# #         return redirect('login')
 
 
 
@@ -165,134 +165,134 @@ def home(request):
 
 
 
-"""
-class BookFormat(Enum):
-  HARDCOVER, PAPERBACK, AUDIO_BOOK, EBOOK, NEWSPAPER, MAGAZINE, JOURNAL = 1, 2, 3, 4, 5, 6, 7
+# """
+# class BookFormat(Enum):
+#   HARDCOVER, PAPERBACK, AUDIO_BOOK, EBOOK, NEWSPAPER, MAGAZINE, JOURNAL = 1, 2, 3, 4, 5, 6, 7
 
 
-class BookStatus(Enum):
-  AVAILABLE, RESERVED, LOANED, LOST = 1, 2, 3, 4
+# class BookStatus(Enum):
+#   AVAILABLE, RESERVED, LOANED, LOST = 1, 2, 3, 4
 
 
-class ReservationStatus(Enum):
-  WAITING, PENDING, CANCELED, NONE = 1, 2, 3, 4
+# class ReservationStatus(Enum):
+#   WAITING, PENDING, CANCELED, NONE = 1, 2, 3, 4
 
 
-class AccountStatus(Enum):
-  ACTIVE, CLOSED, CANCELED, BLACKLISTED, NONE = 1, 2, 3, 4, 5
+# class AccountStatus(Enum):
+#   ACTIVE, CLOSED, CANCELED, BLACKLISTED, NONE = 1, 2, 3, 4, 5
 
 
 
-from abc import ABC, abstractmethod
+# from abc import ABC, abstractmethod
 
-class Search(ABC):
-  def search_by_title(self, title):
-    None
+# class Search(ABC):
+#   def search_by_title(self, title):
+#     None
 
-  def search_by_author(self, author):
-    None
+#   def search_by_author(self, author):
+#     None
 
-  def search_by_subject(self, subject):
-    None
+#   def search_by_subject(self, subject):
+#     None
 
-  def search_by_pub_date(self, publish_date):
-    None
+#   def search_by_pub_date(self, publish_date):
+#     None
 
 
-class Catalog(Search):
-  def __init__(self):
-    self.__book_titles = {}
-    self.__book_authors = {}
-    self.__book_subjects = {}
-    self.__book_publication_dates = {}
+# class Catalog(Search):
+#   def __init__(self):
+#     self.__book_titles = {}
+#     self.__book_authors = {}
+#     self.__book_subjects = {}
+#     self.__book_publication_dates = {}
 
-  def search_by_title(self, query):
-    # return all books containing the string query in their title.
-    return self.__book_titles.get(query)
+#   def search_by_title(self, query):
+#     # return all books containing the string query in their title.
+#     return self.__book_titles.get(query)
 
-  def search_by_author(self, query):
-    # return all books containing the string query in their author's name.
-    return self.__book_authors.get(query)
+#   def search_by_author(self, query):
+#     # return all books containing the string query in their author's name.
+#     return self.__book_authors.get(query)
 
-from abc import ABC, abstractmethod
+# from abc import ABC, abstractmethod
 
-class Book(ABC):
-  def __init__(self, ISBN, title, subject, publisher, language, number_of_pages):
-    self.__ISBN = ISBN
-    self.__title = title
-    self.__subject = subject
-    self.__publisher = publisher
-    self.__language = language
-    self.__number_of_pages = number_of_pages
-    self.__authors = []
+# class Book(ABC):
+#   def __init__(self, ISBN, title, subject, publisher, language, number_of_pages):
+#     self.__ISBN = ISBN
+#     self.__title = title
+#     self.__subject = subject
+#     self.__publisher = publisher
+#     self.__language = language
+#     self.__number_of_pages = number_of_pages
+#     self.__authors = []
 
 
-class BookItem(Book):
-  def __init__(self, barcode, is_reference_only, borrowed, due_date, price, book_format, status, date_of_purchase, publication_date, placed_at):
-    self.__barcode = barcode
-    self.__is_reference_only = is_reference_only
-    self.__borrowed = borrowed
-    self.__due_date = due_date
-    self.__price = price
-    self.__format = book_format
-    self.__status = status
-    self.__date_of_purchase = date_of_purchase
-    self.__publication_date = publication_date
-    self.__placed_at = placed_at
+# class BookItem(Book):
+#   def __init__(self, barcode, is_reference_only, borrowed, due_date, price, book_format, status, date_of_purchase, publication_date, placed_at):
+#     self.__barcode = barcode
+#     self.__is_reference_only = is_reference_only
+#     self.__borrowed = borrowed
+#     self.__due_date = due_date
+#     self.__price = price
+#     self.__format = book_format
+#     self.__status = status
+#     self.__date_of_purchase = date_of_purchase
+#     self.__publication_date = publication_date
+#     self.__placed_at = placed_at
 
-  def checkout(self, member_id):
-    if self.get_is_reference_only():
-      print("self book is Reference only and can't be issued")
-      return False
-    if not BookLending.lend_book(self.get_bar_code(), member_id):
-      return False
-    self.update_book_item_status(BookStatus.LOANED)
-    return True
+#   def checkout(self, member_id):
+#     if self.get_is_reference_only():
+#       print("self book is Reference only and can't be issued")
+#       return False
+#     if not BookLending.lend_book(self.get_bar_code(), member_id):
+#       return False
+#     self.update_book_item_status(BookStatus.LOANED)
+#     return True
 
 
-class Rack:
-  def __init__(self, number, location_identifier):
-    self.__number = number
-    self.__location_identifier = location_identifier
+# class Rack:
+#   def __init__(self, number, location_identifier):
+#     self.__number = number
+#     self.__location_identifier = location_identifier
 
 
- class BookReservation:
-  def __init__(self, creation_date, status, book_item_barcode, member_id):
-    self.__creation_date = creation_date
-    self.__status = status
-    self.__book_item_barcode = book_item_barcode
-    self.__member_id = member_id
+#  class BookReservation:
+#   def __init__(self, creation_date, status, book_item_barcode, member_id):
+#     self.__creation_date = creation_date
+#     self.__status = status
+#     self.__book_item_barcode = book_item_barcode
+#     self.__member_id = member_id
 
-  def fetch_reservation_details(self, barcode):
-    None
+#   def fetch_reservation_details(self, barcode):
+#     None
 
 
-class BookLending:
-  def __init__(self, creation_date, due_date, book_item_barcode, member_id):
-    self.__creation_date = creation_date
-    self.__due_date = due_date
-    self.__return_date = None
-    self.__book_item_barcode = book_item_barcode
-    self.__member_id = member_id
+# class BookLending:
+#   def __init__(self, creation_date, due_date, book_item_barcode, member_id):
+#     self.__creation_date = creation_date
+#     self.__due_date = due_date
+#     self.__return_date = None
+#     self.__book_item_barcode = book_item_barcode
+#     self.__member_id = member_id
 
-  def lend_book(self, barcode, member_id):
-    None
+#   def lend_book(self, barcode, member_id):
+#     None
 
-  def fetch_lending_details(self, barcode):
-    None
+#   def fetch_lending_details(self, barcode):
+#     None
 
 
-class Fine:
-  def __init__(self, creation_date, book_item_barcode, member_id):
-    self.__creation_date = creation_date
-    self.__book_item_barcode = book_item_barcode
-    self.__member_id = member_id
+# class Fine:
+#   def __init__(self, creation_date, book_item_barcode, member_id):
+#     self.__creation_date = creation_date
+#     self.__book_item_barcode = book_item_barcode
+#     self.__member_id = member_id
 
-  def collect_fine(self, member_id, days):
-    None
+#   def collect_fine(self, member_id, days):
+#     None
 
 
-"""
+# """
 
 
 
