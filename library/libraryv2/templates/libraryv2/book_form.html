@@ -1,74 +1,11 @@
 {%extends 'libraryv2/base.html'%}
 {%load static%}
 {%block content%}
-<div class='container'>
-	<form method = "post">
-		{% csrf_token %}
-	
-	<div class="row">
-      <div class="col-25">
-        <label for="id_title">Title</label>
-      </div>
-
-      <div class="col-75">
-        <input type="text" id="id_title" name="title" placeholder="title..." required id="id_title">
-      </div>
-
-    </div>
-
-
-    <div class="row">
-      <div class="col-25">
-        <label for="id_subject">Subject</label>
-      </div>
-
-      <div class="col-75">
-        <input type="text" id="id_subject" name="subject" placeholder="subject...." required id='id_subject'>
-      </div>
-
-    </div>
-
-
-    <div class="row">
-      <div class="col-25">
-        <label for="id_publisher">Publisher</label>
-      </div>
-
-      <div class="col-75">
-        <input type="text" id="id_publisher" name="publisher" placeholder="publisher...." required id='id_publisher'>
-      </div>
-
-    </div>
-
-    <div class="row">
-      <div class="col-25">
-        <label for="id_authors">Authors</label>
-      </div>
-
-      <div class="col-75">
-        <input type="text" id="id_authors" name="authors" placeholder="authors...." required id="id_authors">
-      </div>
-
-    </div>
-
-     <div class="row">
-
-      <div class="col-25">
-        <label for="id_nobooks">No books</label>
-      </div>
-
-      <div class="col-75">
-        <input type="text" id="id_nobooks" name="nobooks" placeholder="no books...." required id="id_nobooks">
-      </div>
-
-     </div>
-
-     <div class="row">
-      <input type="submit" value="Submit">
-    </div>
-			
+ <div class='container'>
+<form method='post'>
+  {%csrf_token%}
+  {{form.as_p}}
+  <button  type="submit"  class="button">submit</button>
 </form>
 </div>
-</div>
-
 {%endblock%}
