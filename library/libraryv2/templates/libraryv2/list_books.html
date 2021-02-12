@@ -1,6 +1,9 @@
 {% extends 'libraryv2/base.html' %}
+{% load static %}
 {%block content%}
-<link rel="stylesheet" href="static/table.css">
+<link href="{% static 'css/table.css'%}" rel="stylesheet">
+<a href="bookcatergory" class="button">Book Catergory</a>
+<a href="bookform" class="button">add book</a>
 <center>
 <table class="styled-table">
     <thead>
@@ -39,6 +42,5 @@
          {% endfor %}
     </tbody>
 </table>
-<a href="bookform" class="button">add book</a>
 </center>
 {%endblock%}

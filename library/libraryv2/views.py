@@ -1,9 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Book, BookCatergory, BookFormat
-from .forms import BookForm
-from django.views.generic.list import ListView
-from django.db import models
-
+from .forms import BookForm, BookCatergoryForm
 
 def bookform(request):
 	form = BookForm(request.POST)
@@ -48,22 +45,20 @@ def Updatebook(request, id):
 def home(request):
   return render(request, 'libraryv2/home.html')
 
+def Addbookcatergory(request):
+  form = BookCatergoryForm(request.POST)
+  if request.method == 'POST':
+    form = BookCatergoryForm(request.POST)
+    if form.is_valid():
+      form.save()
+      form = BookCatergoryForm()
+      return render(request, 'libraryv2/Addbookcatergory.html')
+  else:
+    form = BookCatergoryForm()
+  return render(request, 'libraryv2/Addbookcatergory.html', {'form': form}) 
 
 
-# def updatesales(request, id):
-#     if request.user.is_authenticated:
-#         updateoj = sale.objects.get(id=id)
-#         updateoj = salesform(request.POST or None, instance=updateoj)
-#         if updateoj.is_valid():
-#             updateoj.save()
-#             updateoj = salesform()
-#             return redirect('sales_view')
-#         context = {
-#             'updateoj': updateoj
-#         }
-#         return render(request, 'sales/updatesales.html', context)
-#     else:
-#         return redirect('login')
+
 
 
 
