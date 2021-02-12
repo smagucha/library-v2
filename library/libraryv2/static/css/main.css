@@ -4,12 +4,12 @@
 	margin: 0 auto;
 	/*text-align: center;
 	justify-content: center;*/
-	background-image:url('img/stackbooks.jpg');
+	background-image:url('static/img/stackbooks.jpg');
   border-radius: 10px;
   padding: 30px;
   margin-top: 10px;
   background-size: 100% 100%;
- /* background-color: orange;*/
+  background-color: orange;
 
 }
 .container input[type], select{
@@ -78,6 +78,12 @@
     float: none;
     display: block;
     text-align: left;
+  }
+  .container{
+    width:100vh;
+  }
+  .container input[type], select{
+    width:100vh;
   }
   
 }

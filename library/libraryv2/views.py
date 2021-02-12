@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
-from .models import Book, BookCatergory, BookFormat
-from .forms import BookForm, BookCatergoryForm
+from .models import Book, BookCatergory, BookFormat, Person
+from .forms import BookForm, BookCatergoryForm,StudentForm
+from django.shortcuts import get_object_or_404
 
 def bookform(request):
 	form = BookForm(request.POST)
@@ -24,14 +25,31 @@ def allbook(request):
 	return render(request, 'libraryv2/list_books.html', context)
 
 def DeleteBook(request, id):
-    delobj = Book.objects.get(id=id)
+    delobj =Book.objects.get(id=id)
     if request.method == 'POST':
         delobj.delete()
-        return redirect('vieworder')
+        return redirect('allbooks')
     context = {
         'delobj': delobj
     }
     return render(request, 'libraryv2/deletebook.html', context)
+# def delete_view(request, id): 
+#     # dictionary for initial data with  
+#     # field names as keys 
+#     context ={} 
+  
+#     # fetch the object related to passed id 
+#     obj = get_object_or_404(GeeksModel, id = id) 
+  
+  
+#     if request.method =="POST": 
+#         # delete object 
+#         obj.delete() 
+#         # after deleting redirect to  
+#         # home page 
+#         return HttpResponseRedirect("/") 
+  
+#     return render(request, "delete_view.html", context) 
 
 def Updatebook(request, id):
 	obj = Book.objects.get(id=id)
@@ -39,7 +57,7 @@ def Updatebook(request, id):
 	if form.is_valid():
 		form.save()
 		form= BookForm()
-		return redirect('allbook')
+		return redirect('allbooks')
 	return render(request, 'libraryv2/updatebook.html', {'obj':obj,'form': form})
 
 def home(request):
@@ -55,7 +73,44 @@ def Addbookcatergory(request):
       return render(request, 'libraryv2/Addbookcatergory.html')
   else:
     form = BookCatergoryForm()
-  return render(request, 'libraryv2/Addbookcatergory.html', {'form': form}) 
+  return render(request, 'libraryv2/Addbookcatergory.html', {'form': form})
+
+def addstudent(request):
+  form = StudentForm(request.POST)
+  if request.method == 'POST':
+    form = StudentForm(request.POST)
+    if form.is_valid():
+      form.save()
+      form = StudentForm()
+      return render(request,'libraryv2/addstudent.html',{'form': form})
+  else:
+    form = StudentForm()
+    return render(request,'libraryv2/addstudent.html',{'form': form})
+
+def liststudent(request):
+  student = Person.objects.all()
+  return render(request, 'libraryv2/liststudent.html', {'student': student})
+
+def updatestudent(request, id):
+  student = Person.objects.get(id=id)
+  form = StudentForm(request.POST or None, instance= student)
+  if form.is_valid():
+    form.save()
+    form= StudentForm()
+    return redirect('liststudent')
+  return render(request, 'libraryv2/updatestudent.html', {'student':student,'form': form})
+
+def deletestudent(request, id):
+  delstudent= Person.objects.get(id =id)
+  if request.method=='POST':
+    delstudent.delete()
+    return redirect('liststudent')
+  context = {
+    'delstudent': delstudent
+  }
+  return render(request, 'libraryv2/deletestudent.html', context)
+
+
 
 
 

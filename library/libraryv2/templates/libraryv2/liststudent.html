@@ -1,0 +1,36 @@
+{% extends 'libraryv2/base.html' %}
+{% load static %}
+{%block content%}
+<link href="{% static 'css/table.css'%}" rel="stylesheet">
+<a href="addstudent" class="button">add student</a>
+<a href="bookform" class="button">add book</a>
+<center>
+<table class="styled-table">
+    <thead>
+        <tr>
+        	<th>No</th>
+            <th>student</th>
+            <th>email</th>
+            <th>phone</th>
+            <th>student id</th>
+            <th>Update</th>
+            <th>delete</th>
+ 
+        </tr>
+    </thead>
+    <tbody>
+    	{% for obj in student %}
+        <tr>
+            <td>  {{forloop.counter}}</td>
+            <td> {{obj.name}}</td>
+            <td> {{obj.email}}</td>
+            <td> {{obj.phone}}</td>
+            <td> {{obj.studentid}}</td>
+            <td><a href=" updatestudent/{{obj.id}}/update" class="updatelink">update</a></td>
+            <td><a href="deletestudent/{{obj.id}}/delete" class="deletelink">delete</a></td>
+        </tr>
+         {% endfor %}
+    </tbody>
+</table>
+</center>
+{%endblock%}
