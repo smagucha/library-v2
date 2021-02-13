@@ -14,5 +14,19 @@ admin.site.register(Bookissue)
 class PersonAdmin(admin.ModelAdmin):
     search_fields = ['name', 'email', 'phone',]
     list_display = ['name', 'email', 'phone',]
-
     #list_filter = []
+
+@admin.register(Book)
+class BookAdmin(admin.ModelAdmin):
+    search_fields = ['title', 'subject', 'publisher','authors',]
+    list_display = ['title', 'subject', 'publisher','authors']
+    #list_filter = []
+
+@admin.register(Bookissue)
+class BookissueAdmin(admin.ModelAdmin):
+    search_fields = ['student', 'book', 'given_date','due_date',]
+    list_display = ['student', 'book', 'given_date','due_date',]
+    #list_filter = []
+
+
+   
