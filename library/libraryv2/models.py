@@ -6,6 +6,9 @@ class Person(models.Model):
 	phone =models.PositiveIntegerField()
 	studentid = models.CharField(max_length= 200)
 
+	def __str__(self):
+		return self.name
+
 class Librarian(models.Model):
 	name = models.CharField(max_length= 200)
 	email = models.EmailField()
@@ -35,6 +38,9 @@ class BookFormat(models.Model):
 class BookCatergory(models.Model):
 	name= models.CharField(max_length= 200)
 
+	def __str__(self):
+ 		return self.name
+
 class Book(models.Model):
 	title = models.CharField(max_length = 200)
 	subject = models.CharField(max_length= 200)
@@ -51,6 +57,10 @@ class Bookissue(models.Model):
 	book = models.ForeignKey(Book, on_delete = models.CASCADE)
 	given_date =models.DateTimeField(auto_now_add = True, auto_now= False)
 	due_date = models.DateField()
+
+	def __str__(self):
+		return self.student
+
 
 
 

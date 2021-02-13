@@ -26,7 +26,7 @@
     	{% for obj in student %}
         <tr>
             <td>  {{forloop.counter}}</td>
-            <td> {{obj.name}}</td>
+            <td> <a href="studentdetail/{{obj.id}}/">{{obj.name}}</a></td>
             <td> {{obj.email}}</td>
             <td> {{obj.phone}}</td>
             <td> {{obj.studentid}}</td>

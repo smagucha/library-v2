@@ -132,7 +132,7 @@ def Issuedbooks(request):
 
 def studentdetail(request, id):
   student = Person.objects.filter(id = id)
-  studentbook = Bookissue.objects.filter(student= student[0]) 
+  studentbook = Bookissue.objects.filter(student= student[:1]) 
   context ={
     'student':student,
     'studentbook': studentbook,
