@@ -1,0 +1,35 @@
+{% extends 'libraryv2/base.html' %}
+{% load static %}
+{%block content%}
+<link href="{% static 'css/table.css'%}" rel="stylesheet">
+<a href="Issuebook" class="button">issue book</a>
+    <center>
+<table class="styled-table">
+    <thead>
+        <tr>
+        	<th>No</th>
+            <th>student</th>
+            <th>book</th>
+            <th>given date</th>
+            <th>due date</th>
+            <th>Update</th>
+            <th>delete</th>
+        </tr>
+    </thead>
+    <tbody>
+       
+    	{% for query in query %}
+        <tr>
+            <td> {{forloop.counter}}</td>
+            <td> {{query.student}}</td>
+            <td> {{query.book}}</td>
+            <td> {{query.given_date}}</td>
+            <td> {{query.due_date}}</td>
+            <td><a href="updatebook/{{query.id}}/update" class="updatelink">update</a></td>
+            <td><a href="deletebook/{{query.id}}/delete" class="deletelink">delete</a></td>
+        </tr>
+         {% endfor %}
+    </tbody>
+</table>
+</center>
+{%endblock%}

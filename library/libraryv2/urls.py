@@ -11,5 +11,8 @@ urlpatterns=[
 	path('liststudent', views.liststudent, name='liststudent'),
 	path('updatestudent/<int:id>/update', views.updatestudent, ),
 	path('deletestudent/<int:id>/delete', views.deletestudent),
+	path('Issuebook', views.Issuebook),
+	path('Issuedbooks', views.Issuedbooks),
+	path('studentdetail/<int:id>/', views.studentdetail),
 ]
 

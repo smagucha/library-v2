@@ -1,15 +1,18 @@
 from django.contrib import admin
 
 from .models import (
- 	Book,BookFormat, AccountStatus,
- 	Librarian,Person, Rack, BookItem,BookCatergory
+ 	Book,BookFormat, Librarian,Person,BookCatergory,Bookissue
  	)
 admin.site.register(BookFormat)
 admin.site.register(Book)
-admin.site.register(AccountStatus)
 admin.site.register(Librarian)
-admin.site.register(Person)
-admin.site.register(BookItem)
-admin.site.register(Rack)
+#admin.site.register(Person)
 admin.site.register(BookCatergory)
+admin.site.register(Bookissue)
 
+@admin.register(Person)
+class PersonAdmin(admin.ModelAdmin):
+    search_fields = ['name', 'email', 'phone',]
+    list_display = ['name', 'email', 'phone',]
+
+    #list_filter = []

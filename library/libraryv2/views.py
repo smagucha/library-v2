@@ -1,9 +1,11 @@
 from django.shortcuts import render, redirect
-from .models import Book, BookCatergory, BookFormat, Person
-from .forms import BookForm, BookCatergoryForm,StudentForm
+from .models import Book, BookCatergory, BookFormat, Person, Bookissue
+from .forms import BookForm, BookCatergoryForm,StudentForm,Issueform
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
+from django.db.models import Count
+
 
 def bookform(request):
 	form = BookForm(request.POST)
@@ -81,7 +83,13 @@ def addstudent(request):
     return render(request,'libraryv2/addstudent.html',{'form': form})
 
 def liststudent(request):
-  student = Person.objects.all()
+  if 'q' in request.GET:
+        q=request.GET['q']
+        lookup=(Q(name__icontains=q)|Q(email__icontains=q)|Q(phone__icontains=q)
+          |Q(studentid__icontains=q))
+        student =Person.objects.filter(lookup)
+  else:
+      student= Person.objects.all()
   return render(request, 'libraryv2/liststudent.html', {'student': student})
 
 def updatestudent(request, id):
@@ -102,6 +110,38 @@ def deletestudent(request, id):
     'delstudent': delstudent
   }
   return render(request, 'libraryv2/deletestudent.html', context)
+
+
+
+def Issuebook(request):
+  form= Issueform(request.POST)
+  if request.method =='POST':
+    form= Issueform(request.POST)
+    if form.is_valid():
+      form.save()
+      form =Issueform()
+      return render(request,'libraryv2/issuebook.html', {'form': form})
+  else:
+    form = Issueform()
+  return render(request, 'libraryv2/issuebook.html',{'form': form})
+
+
+def Issuedbooks(request):
+  query =Bookissue.objects.all()
+  return render(request, 'libraryv2/issuedbooks.html', {'query': query})
+
+def studentdetail(request, id):
+  student = Person.objects.filter(id = id)
+  studentbook = Bookissue.objects.filter(student= student[0]) 
+  context ={
+    'student':student,
+    'studentbook': studentbook,
+  }
+  
+  return render(request, 'libraryv2/studentdetail.html',context)
+
+#student = Person.objects.filter(id = 1)
+#Bookissue.objects.filter(student_id = 1 )
 
 
 

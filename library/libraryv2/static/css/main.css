@@ -19,6 +19,12 @@
   border-radius: 5px;
   font-size: 20px;
 }
+.search input[type]{
+  width: 80vh;
+  height: 6vh;
+  border-radius: 5px;
+  font-size: 20px;
+}
 .button {
   background-color: #4CAF50;
   border: none;

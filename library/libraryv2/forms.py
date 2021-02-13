@@ -1,5 +1,5 @@
 from django.forms import ModelForm
-from .models import Book, BookCatergory,Person
+from .models import Book, BookCatergory,Person, Bookissue
 
 class BookForm(ModelForm):
 	class Meta:
@@ -15,3 +15,8 @@ class StudentForm(ModelForm):
 	class Meta:
 		model = Person
 		fields = '__all__'
+
+class Issueform(ModelForm):
+	class Meta:
+		model = Bookissue
+		fields ='__all__'

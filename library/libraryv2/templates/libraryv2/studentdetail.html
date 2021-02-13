@@ -1,0 +1,15 @@
+{% extends 'libraryv2/base.html'%}
+{% load static %}
+{% block content %}
+	{%for student in student%}
+	{{student.name}}<br>
+	{{student.email}}<br>
+	{%endfor%}
+	{%for studentbook in studentbook%}
+	{{studentbook.student}}<br>
+	{{studentbook.book}}<br>
+	{%endfor%}
+{%endblock%}
+
+
+<!-- bookissue' into field. Choices are: book, book_id, due_date, given_date, id, student, student_id -->
