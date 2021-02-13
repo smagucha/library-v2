@@ -20,11 +20,6 @@ def bookform(request):
 		form = BookForm()
 	return render(request, 'libraryv2/book_form.html', {'form': form})
 
-#books = Books.objects.filter(Q(title__icontains=search_query)
- # | Q(author__icontains=search_query) | 
- # Q(year_created__icontains
- #  (search_query))
- # .distinct().order_by("author")
 
 def allbook(request):
   if 'q' in request.GET:
@@ -132,16 +127,17 @@ def Issuedbooks(request):
 
 def studentdetail(request, id):
   student = Person.objects.filter(id = id)
-  studentbook = Bookissue.objects.filter(student= student[:1]) 
+  studentbook = Bookissue.objects.filter(student= student[:1],) 
   context ={
     'student':student,
     'studentbook': studentbook,
   }
+
   
   return render(request, 'libraryv2/studentdetail.html',context)
 
-#student = Person.objects.filter(id = 1)
-#Bookissue.objects.filter(student_id = 1 )
+def returnbook(request):
+  return render(request, 'libraryv2/returnbook.html')
 
 
 

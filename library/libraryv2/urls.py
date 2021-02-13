@@ -14,5 +14,6 @@ urlpatterns=[
 	path('Issuebook', views.Issuebook),
 	path('Issuedbooks', views.Issuedbooks),
 	path('studentdetail/<int:id>/', views.studentdetail),
+	path('returnbook', views.returnbook)
 ]
 

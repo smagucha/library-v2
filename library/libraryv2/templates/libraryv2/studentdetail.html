@@ -6,7 +6,7 @@
 	{{student.email}}<br>
 	{%endfor%}
 	{%for studentbook in studentbook%}
-	book {{studentbook.book}}<br>
+	book {{studentbook.book}} {{student.due_date}}<br>
 	{%endfor%}
 {%endblock%}
 
