@@ -5,6 +5,9 @@
 <a href="bookcatergory" class="button">Book Catergory</a>
 <a href="bookform" class="button">add book</a>
 <center>
+    <form>
+        <input type="text" name="q" placeholder="search">
+    </form>
 <table class="styled-table">
     <thead>
         <tr>
@@ -24,20 +27,21 @@
         </tr>
     </thead>
     <tbody>
-    	{% for obj in obj %}
+       
+    	{% for query in query %}
         <tr>
             <td>  {{forloop.counter}}</td>
-            <td> {{obj.title}}</td>
-            <td> {{obj.subject}}</td>
-            <td> {{obj.publisher}}</td>
-            <td> {{obj.authors}}</td>
-            <td> {{obj.nobooks}}</td>
+            <td> {{query.title}}</td>
+            <td> {{query.subject}}</td>
+            <td> {{query.publisher}}</td>
+            <td> {{query.authors}}</td>
+            <td> {{query.nobooks}}</td>
             <td>issued</td>
             <td>lost</td>
             <td>reversed</td>
             <td>remaining</td>
-            <td><a href="updatebook/{{obj.id}}/update" class="updatelink">update</a></td>
-            <td><a href="deletebook/{{obj.id}}/delete" class="deletelink">delete</a></td>
+            <td><a href="updatebook/{{query.id}}/update" class="updatelink">update</a></td>
+            <td><a href="deletebook/{{query.id}}/delete" class="deletelink">delete</a></td>
         </tr>
          {% endfor %}
     </tbody>

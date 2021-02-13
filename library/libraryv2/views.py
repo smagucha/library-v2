@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Book, BookCatergory, BookFormat, Person
 from .forms import BookForm, BookCatergoryForm,StudentForm
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
+from django.contrib import messages
 
 def bookform(request):
 	form = BookForm(request.POST)
@@ -16,13 +18,21 @@ def bookform(request):
 		form = BookForm()
 	return render(request, 'libraryv2/book_form.html', {'form': form})
 
+#books = Books.objects.filter(Q(title__icontains=search_query)
+ # | Q(author__icontains=search_query) | 
+ # Q(year_created__icontains
+ #  (search_query))
+ # .distinct().order_by("author")
+
 def allbook(request):
-	obj= Book.objects.all()
-	print (obj)
-	context={
-	'obj': obj
-	}
-	return render(request, 'libraryv2/list_books.html', context)
+  if 'q' in request.GET:
+        q=request.GET['q']
+        lookup=(Q(title__icontains=q)|Q(subject__icontains=q)|Q(publisher__icontains=q)
+          |Q(authors__icontains=q)|Q(nobooks__icontains=q))
+        query =Book.objects.filter(lookup)
+  else:
+      query= Book.objects.all()
+  return render(request, 'libraryv2/list_books.html', {'query': query})
 
 def DeleteBook(request, id):
     delobj =Book.objects.get(id=id)
@@ -32,24 +42,7 @@ def DeleteBook(request, id):
     context = {
         'delobj': delobj
     }
-    return render(request, 'libraryv2/deletebook.html', context)
-# def delete_view(request, id): 
-#     # dictionary for initial data with  
-#     # field names as keys 
-#     context ={} 
-  
-#     # fetch the object related to passed id 
-#     obj = get_object_or_404(GeeksModel, id = id) 
-  
-  
-#     if request.method =="POST": 
-#         # delete object 
-#         obj.delete() 
-#         # after deleting redirect to  
-#         # home page 
-#         return HttpResponseRedirect("/") 
-  
-#     return render(request, "delete_view.html", context) 
+    return render(request, 'libraryv2/deletebook.html', context) 
 
 def Updatebook(request, id):
 	obj = Book.objects.get(id=id)

@@ -62,62 +62,7 @@ class BookFormat(models.Model):
 		choices=book,
 		default=HARDCOVER,
     )
-	"""
-	def is_bookformatt(self):
-		return self.year_in_school in {
-		self.BookFormat.HARDCOVER,
-        self.BookFormat.PAPERBACK,
-        self.BookFormat.NEWSPAPER,
-        self.BookFormat.MAGAZINE,
-        self.BookFormat.JOURNAL,
-       }
-"""
-# class BookStatus(models.Model):
-# 	AVAILABLE = 'AVAILABLE'
-# 	RESERVED = 'RESERVED'
-# 	LOANED ='LOANED'
-# 	LOST ='LOST'
 
-# 	status =(
-# 		(AVAILABLE, 'AVAILABLE'),
-#   		(RESERVED, 'RESERVED'),
-#   		(LOANED,'LOANED'),
-#   		(LOST, 'LOST'),
-# 	)
-# 	bookstatus = models.CharField(
-# 		max_length=9,
-# 		choices=status,
-# 		default=AVAILABLE,
-#     )
-	"""
-	def is_bookstatus(self):
-		return self.year_in_school in {
-		self.BookStatus.AVAILABLE,
-        self.BookStatus.RESERVED,
-        self.BookStatus.LOANED,
-        self.BookStatus.LOST,
-        }
-    """
- 
-# class ReservationStatus(models.Model):
-# 	WAITING ='WAITING'
-# 	CANCELED='CANCELED'
-# 	NONE='NONE'
-# 	status =(
-# 		(WAITING, 'WAITING'),
-#   		(CANCELED,'CANCELED'),
-#   		(NONE, 'NONE'),
-#   		)
-# 	resstatus = models.CharField(max_length=8, choices=status,default=NONE,)
-	"""
-	def is_resstatus(self):
-		return self.status in {
-       	self.ReservationStatus.WAITING,
-        self.ReservationStatus.CANCELED,
-        self.ReservationStatus.NONE,
-       }
-  		
-	"""
 class BookCatergory(models.Model):
 	name= models.CharField(max_length= 200)
 
