@@ -1,0 +1,38 @@
+{% extends 'libraryv2/base.html' %}
+{% load static %}
+{%block content%}
+<link href="{% static 'css/table.css'%}" rel="stylesheet">
+<a href="Addlibrarian" class="button">add librarian</a>
+    <form>
+        <input type="text" name="q" placeholder="search" class = 'search'>
+    </form>
+    <center>
+<table class="styled-table">
+    <thead>
+        <tr>
+        	<th>No</th>
+            <th>name</th>
+            <th>email</th>
+            <th>Phone</th>
+            <th>librarianid</th>
+            <th>Update</th>
+            <th>delete</th>
+        </tr>
+    </thead>
+    <tbody>
+       
+    	{% for liblist in liblist %}
+        <tr>
+            <td>  {{forloop.counter}}</td>
+            <td> {{liblist.name}}</td>
+            <td> {{liblist.email}}</td>
+            <td> {{liblist.phone}}</td>
+            <td> {{liblist.librarianid}}</td>
+            <td><a href="updatelibrarian/{{liblist.id}}/update" class="updatelink">update</a></td>
+            <td><a href="deletelibrarian/{{liblist.id}}/delete" class="deletelink">delete</a></td>
+        </tr>
+         {% endfor %}
+    </tbody>
+</table>
+</center>
+{%endblock%}

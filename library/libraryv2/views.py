@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
-from .models import Book, BookCatergory, BookFormat, Person, Bookissue
-from .forms import BookForm, BookCatergoryForm,StudentForm,Issueform
+from .models import Book, BookCatergory, BookFormat, Person, Bookissue, Librarian
+from .forms import BookForm, BookCatergoryForm, StudentForm,Issueform, Librarianform
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
@@ -138,6 +138,49 @@ def studentdetail(request, id):
 
 def returnbook(request):
   return render(request, 'libraryv2/returnbook.html')
+
+def Addlibrarian(request):
+  form = Librarianform(request.POST)
+  if request.method=='POST':
+    form = Librarianform(request.POST)
+    if form.is_valid():
+      form.save()
+      form=Librarianform()
+      return render(request, 'libraryv2/addlibrarian.html', {'form': form})
+  else:
+    form = Librarianform()
+    return render(request, 'libraryv2/addlibrarian.html', {'form': form})
+
+def  librarianlist(request):
+  liblist=Librarian.objects.all()
+  return render(request, 'libraryv2/listlibrarian.html', {'liblist':liblist})
+
+def updatelibrarian(request, id):
+  liblistid = Librarian.objects.get(id = id)
+  if request.method =='POST':
+    form = Librarianform(request.POST or None, instance=liblistid)
+    if form.is_valid():
+      form.save()
+      form = Librarianform()
+      return redirect('librarianlist')
+  context={'liblistid':liblistid,'form':form , }
+  return render(request, 'libraryv2/updatelibrarian.html', context)
+
+  
+  
+def deletelibrarian(request, id):
+  liblistid = Librarian.objects.get(id = id)
+  if request.method=='POST':
+    liblistid.delete()
+    return redirect('listlibrarian')
+  context = {
+    'liblistid': liblistid
+  }
+  return render(request, 'libraryv2/deletelibrarian.html', context)
+
+
+  
+
 
 
 
