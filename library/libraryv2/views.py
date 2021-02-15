@@ -157,15 +157,22 @@ def  librarianlist(request):
 
 def updatelibrarian(request, id):
   liblistid = Librarian.objects.get(id = id)
-  if request.method =='POST':
-    form = Librarianform(request.POST or None, instance=liblistid)
-    if form.is_valid():
-      form.save()
-      form = Librarianform()
-      return redirect('librarianlist')
+  form = Librarianform(request.POST or None, instance=liblistid)
+  if form.is_valid():
+    form.save()
+    form = Librarianform()
+    return redirect('librarianlist')
   context={'liblistid':liblistid,'form':form , }
   return render(request, 'libraryv2/updatelibrarian.html', context)
 
+# def updatestudent(request, id):
+#   student = Person.objects.get(id=id)
+#   form = StudentForm(request.POST or None, instance= student)
+#   if form.is_valid():
+#     form.save()
+#     form= StudentForm()
+#     return redirect('liststudent')
+#   return render(request, 'libraryv2/updatestudent.html', {'student':student,'form': form})
   
   
 def deletelibrarian(request, id):
