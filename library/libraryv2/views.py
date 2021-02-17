@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect
 from .models import Book, BookCatergory, BookFormat, Person, Bookissue, Librarian
-from .forms import BookForm, BookCatergoryForm, StudentForm,Issueform, Librarianform
+from .forms import BookForm, BookCatergoryForm, StudentForm,Issueform, Librarianform,requestbookform
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
@@ -126,11 +126,15 @@ def Issuedbooks(request):
   return render(request, 'libraryv2/issuedbooks.html', {'query': query})
 
 def studentdetail(request, id):
-  student = Person.objects.filter(id = id)
-  studentbook = Bookissue.objects.filter(student= student[:1],) 
+  student = Person.objects.filter(id = id) 
+  x= Person.objects.get(id=id)
+  y=x.bookissue_set.all()
+  b =x.bookissue_set.count()
+  print(y)
   context ={
     'student':student,
-    'studentbook': studentbook,
+    'y':y,
+    'b': b,
   }
 
   
@@ -165,14 +169,7 @@ def updatelibrarian(request, id):
   context={'liblistid':liblistid,'form':form , }
   return render(request, 'libraryv2/updatelibrarian.html', context)
 
-# def updatestudent(request, id):
-#   student = Person.objects.get(id=id)
-#   form = StudentForm(request.POST or None, instance= student)
-#   if form.is_valid():
-#     form.save()
-#     form= StudentForm()
-#     return redirect('liststudent')
-#   return render(request, 'libraryv2/updatestudent.html', {'student':student,'form': form})
+
   
   
 def deletelibrarian(request, id):
@@ -184,6 +181,28 @@ def deletelibrarian(request, id):
     'liblistid': liblistid
   }
   return render(request, 'libraryv2/deletelibrarian.html', context)
+
+def requestbook(request, id):
+  x= Person.objects.get(id=id)
+  b =x.bookissue_set.count()
+  if b >= 2:
+    return render(request, 'libraryv2/norequestbook.html')
+  else:
+    form = requestbookform(request.POST)
+    if request.method =='POST':
+      form = requestbookform(request.POST)
+      if form.is_valid():
+        form.save()
+        form = requestbookform()
+        return render(request, 'libraryv2/requestbook.html', {'form':form})
+    else:
+      form = requestbookform()
+      return render(request, 'libraryv2/requestbook.html',{'form':form})
+
+
+
+  
+  #return render(request, 'libraryv2/requestbook.html')
 
 
   

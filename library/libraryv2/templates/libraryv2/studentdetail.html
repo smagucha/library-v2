@@ -1,14 +1,40 @@
 {% extends 'libraryv2/base.html'%}
 {% load static %}
 {% block content %}
+<link href="{% static 'css/table.css'%}" rel="stylesheet">
+<h1>student personal details</h1>
 	{%for student in student%}
-	{{student.name}}<br>
-	{{student.email}}<br>
+	name: {{student.name}}<br>
+	email: {{student.email}}<br>
+	phone: {{student.phone}}<br>
+	student ID: {{student.studentid}}<br>
 	{%endfor%}
-	{%for studentbook in studentbook%}
-	book {{studentbook.book}} {{student.due_date}}<br>
-	{%endfor%}
+	<h1>books award</h1>
+<h3>you have been {{b}} books from the libary</h3>
+<center>
+<table class="styled-table">
+    <thead>
+        <tr>
+        	<th>No</th>
+            <th>Book</th>
+            <th>date given</th>
+            <th>return date</th>           
+        </tr>
+    </thead>
+    <tbody>
+       
+    	{%for y in y%}
+        <tr>
+            <td>  {{forloop.counter}}</td>
+            <td> {{y.book}}</td>
+            <td> {{y.given_date}}</td>
+            <td> {{y.due_date}}</td>
+        </tr>
+         {%endfor%}
+    </tbody>
+</table>
+</center>
+{%for student in student%}
+<a href="requestbook/{{student.id}}/" class="button">request book</a>
+{%endfor%}
 {%endblock%}
-
-
-<!-- bookissue' into field. Choices are: book, book_id, due_date, given_date, id, student, student_id -->

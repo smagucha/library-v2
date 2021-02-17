@@ -19,5 +19,6 @@ urlpatterns=[
 	path('librarianlist', views.librarianlist, name='librarianlist'),
 	path('updatelibrarian/<int:id>/update', views.updatelibrarian, ),
 	path('deletelibrarian/<int:id>/delete', views.deletelibrarian),
+	path('requestbook/<int:id>/', views.requestbook)
 ]
 
