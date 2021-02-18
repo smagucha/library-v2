@@ -3,12 +3,6 @@ from django.contrib import admin
 from .models import (
  	Book,BookFormat, Librarian,Person,BookCatergory,Bookissue
  	)
-# admin.site.register(BookFormat)
-# admin.site.register(Book)
-# admin.site.register(Librarian)
-# #admin.site.register(Person)
-# admin.site.register(BookCatergory)
-# admin.site.register(Bookissue)
 
 @admin.register(Person)
 class PersonAdmin(admin.ModelAdmin):
@@ -28,5 +22,16 @@ class BookissueAdmin(admin.ModelAdmin):
     list_display = ['student', 'book', 'given_date','due_date',]
     #list_filter = []
 
+@admin.register(Librarian)
+class LibrarianAdmin(admin.ModelAdmin):
+    search_fields = ['name', 'email', 'phone','librarianid',]
+    list_display = ['name', 'email', 'phone','librarianid',]
+    #list_filter = []
 
+@admin.register(BookCatergory)
+class BookCatergoryAdmin(admin.ModelAdmin):
+    search_fields = ['name', ]
+    list_display = ['name', ]
+
+admin.site.register(BookFormat)
    

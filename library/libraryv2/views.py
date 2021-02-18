@@ -185,7 +185,7 @@ def deletelibrarian(request, id):
 def requestbook(request, id):
   x= Person.objects.get(id=id)
   b =x.bookissue_set.count()
-  if b >= 2:
+  if b >= 3:
     return render(request, 'libraryv2/norequestbook.html')
   else:
     form = requestbookform(request.POST)
