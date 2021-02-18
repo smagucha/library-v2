@@ -24,18 +24,23 @@ def bookform(request):
   else:
     return HttpResponseRedirect('login')
 
-
+@login_required(login_url='/accounts/login/')
 def allbook(request):
-  if 'q' in request.GET:
-        q=request.GET['q']
-        lookup=(Q(title__icontains=q)|Q(subject__icontains=q)|Q(publisher__icontains=q)
-          |Q(authors__icontains=q)|Q(nobooks__icontains=q))
-        query =Book.objects.filter(lookup)
+  if request.user.is_authenticated:
+    if 'q' in request.GET:
+          q=request.GET['q']
+          lookup=(Q(title__icontains=q)|Q(subject__icontains=q)|Q(publisher__icontains=q)
+            |Q(authors__icontains=q)|Q(nobooks__icontains=q))
+          query =Book.objects.filter(lookup)
+    else:
+        query= Book.objects.all()
+    return render(request, 'libraryv2/list_books.html', {'query': query})
   else:
-      query= Book.objects.all()
-  return render(request, 'libraryv2/list_books.html', {'query': query})
+    return HttpResponseRedirect('login')
 
+@login_required(login_url='/accounts/login/')
 def DeleteBook(request, id):
+  if request.user.is_authenticated:
     delobj =Book.objects.get(id=id)
     if request.method == 'POST':
         delobj.delete()
@@ -43,179 +48,239 @@ def DeleteBook(request, id):
     context = {
         'delobj': delobj
     }
-    return render(request, 'libraryv2/deletebook.html', context) 
-
-def Updatebook(request, id):
-	obj = Book.objects.get(id=id)
-	form = BookForm(request.POST or None, instance= obj)
-	if form.is_valid():
-		form.save()
-		form= BookForm()
-		return redirect('allbooks')
-	return render(request, 'libraryv2/updatebook.html', {'obj':obj,'form': form})
-
-def home(request):
-  return render(request, 'libraryv2/home.html')
-
-def Addbookcatergory(request):
-  form = BookCatergoryForm(request.POST)
-  if request.method == 'POST':
-    form = BookCatergoryForm(request.POST)
-    if form.is_valid():
-      form.save()
-      form = BookCatergoryForm()
-      return render(request, 'libraryv2/Addbookcatergory.html')
+    return render(request, 'libraryv2/deletebook.html', context)
   else:
-    form = BookCatergoryForm()
-  return render(request, 'libraryv2/Addbookcatergory.html', {'form': form})
+    return HttpResponseRedirect('login')
 
+@login_required(login_url='/accounts/login/')
+def Updatebook(request, id):
+  if request.user.is_authenticated:
+  	obj = Book.objects.get(id=id)
+  	form = BookForm(request.POST or None, instance= obj)
+  	if form.is_valid():
+  		form.save()
+  		form= BookForm()
+  		return redirect('allbooks')
+  	return render(request, 'libraryv2/updatebook.html', {'obj':obj,'form': form})
+  else:
+    return HttpResponseRedirect('login')
+
+@login_required(login_url='/accounts/login/')
+def home(request):
+  if request.user.is_authenticated:
+    return render(request, 'libraryv2/home.html')
+  else:
+    return HttpResponseRedirect('login')
+
+@login_required(login_url='/accounts/login/')
+def Addbookcatergory(request):
+  if request.user.is_authenticated:
+    form = BookCatergoryForm(request.POST)
+    if request.method == 'POST':
+      form = BookCatergoryForm(request.POST)
+      if form.is_valid():
+        form.save()
+        form = BookCatergoryForm()
+        return render(request, 'libraryv2/Addbookcatergory.html')
+    else:
+      form = BookCatergoryForm()
+    return render(request, 'libraryv2/Addbookcatergory.html', {'form': form})
+  else:
+    return HttpResponseRedirect('login')
+
+@login_required(login_url='/accounts/login/')
 def addstudent(request):
-  form = StudentForm(request.POST)
-  if request.method == 'POST':
+  if request.user.is_authenticated:
     form = StudentForm(request.POST)
-    if form.is_valid():
-      form.save()
+    if request.method == 'POST':
+      form = StudentForm(request.POST)
+      if form.is_valid():
+        form.save()
+        form = StudentForm()
+        return render(request,'libraryv2/addstudent.html',{'form': form})
+    else:
       form = StudentForm()
       return render(request,'libraryv2/addstudent.html',{'form': form})
   else:
-    form = StudentForm()
-    return render(request,'libraryv2/addstudent.html',{'form': form})
+    return HttpResponseRedirect('login')
 
+@login_required(login_url='/accounts/login/')
 def liststudent(request):
-  if 'q' in request.GET:
-        q=request.GET['q']
-        lookup=(Q(name__icontains=q)|Q(email__icontains=q)|Q(phone__icontains=q)
-          |Q(studentid__icontains=q))
-        student =Person.objects.filter(lookup)
+  if request.user.is_authenticated:
+    if 'q' in request.GET:
+          q=request.GET['q']
+          lookup=(Q(name__icontains=q)|Q(email__icontains=q)|Q(phone__icontains=q)
+            |Q(studentid__icontains=q))
+          student =Person.objects.filter(lookup)
+    else:
+        student= Person.objects.all()
+    return render(request, 'libraryv2/liststudent.html', {'student': student})
   else:
-      student= Person.objects.all()
-  return render(request, 'libraryv2/liststudent.html', {'student': student})
-
+    return HttpResponseRedirect('login')
+@login_required(login_url='/accounts/login/')
 def updatestudent(request, id):
-  student = Person.objects.get(id=id)
-  form = StudentForm(request.POST or None, instance= student)
-  if form.is_valid():
-    form.save()
-    form= StudentForm()
-    return redirect('liststudent')
-  return render(request, 'libraryv2/updatestudent.html', {'student':student,'form': form})
+  if request.user.is_authenticated:
+    student = Person.objects.get(id=id)
+    form = StudentForm(request.POST or None, instance= student)
+    if form.is_valid():
+      form.save()
+      form= StudentForm()
+      return redirect('liststudent')
+    return render(request, 'libraryv2/updatestudent.html', {'student':student,'form': form})
+  else:
+    return HttpResponseRedirect('login')
 
+@login_required(login_url='/accounts/login/')
 def deletestudent(request, id):
-  delstudent= Person.objects.get(id =id)
-  if request.method=='POST':
-    delstudent.delete()
-    return redirect('liststudent')
-  context = {
-    'delstudent': delstudent
-  }
-  return render(request, 'libraryv2/deletestudent.html', context)
+  if request.user.is_authenticated:
+    delstudent= Person.objects.get(id =id)
+    if request.method=='POST':
+      delstudent.delete()
+      return redirect('liststudent')
+    context = {
+      'delstudent': delstudent
+    }
+    return render(request, 'libraryv2/deletestudent.html', context)
+  else:
+    return HttpResponseRedirect('login')
 
 
-
+@login_required(login_url='/accounts/login/')
 def Issuebook(request):
-  form= Issueform(request.POST)
-  if request.method =='POST':
+  if request.user.is_authenticated:
     form= Issueform(request.POST)
-    if form.is_valid():
-      form.save()
-      form =Issueform()
-      return render(request,'libraryv2/issuebook.html', {'form': form})
-  else:
-    form = Issueform()
-  return render(request, 'libraryv2/issuebook.html',{'form': form})
-
-def Issuebookdelete(request, id):
-  delbookissue = Bookissue.objects.get(id = id)
-  if request.method=='POST':
-    delbookissue.delete()
-    return redirect('Issuedbooks')
-  context = {
-    'delbookissue': delbookissue
-  }
-  return render(request, 'libraryv2/deletebookissued.html', context)
-
-def Issuebookupdate(request, id):
-  updatebookissue=Bookissue.objects.get(id=id)
-  form = Issueform(request.POST or None, instance= updatebookissue)
-  if form.is_valid():
-    form.save()
-  return render(request,'libraryv2/Issuebookupdate.html',{'form':form})
-
-
-def Issuedbooks(request):
-  query =Bookissue.objects.all()
-  return render(request, 'libraryv2/issuedbooks.html', {'query': query})
-
-def studentdetail(request, id):
-  student = Person.objects.filter(id = id) 
-  x= Person.objects.get(id=id)
-  y=x.bookissue_set.all()
-  b =x.bookissue_set.count()
-  print(y)
-  context ={
-    'student':student,
-    'y':y,
-    'b': b,
-  }
-  return render(request, 'libraryv2/studentdetail.html',context)
-
-
-
-def Addlibrarian(request):
-  form = Librarianform(request.POST)
-  if request.method=='POST':
-    form = Librarianform(request.POST)
-    if form.is_valid():
-      form.save()
-      form=Librarianform()
-      return render(request, 'libraryv2/addlibrarian.html', {'form': form})
-  else:
-    form = Librarianform()
-    return render(request, 'libraryv2/addlibrarian.html', {'form': form})
-
-def  librarianlist(request):
-  liblist=Librarian.objects.all()
-  return render(request, 'libraryv2/listlibrarian.html', {'liblist':liblist})
-
-def updatelibrarian(request, id):
-  liblistid = Librarian.objects.get(id = id)
-  form = Librarianform(request.POST or None, instance=liblistid)
-  if form.is_valid():
-    form.save()
-    form = Librarianform()
-    return redirect('librarianlist')
-  context={'liblistid':liblistid,'form':form , }
-  return render(request, 'libraryv2/updatelibrarian.html', context)
-
-
-  
-  
-def deletelibrarian(request, id):
-  liblistid = Librarian.objects.get(id = id)
-  if request.method=='POST':
-    liblistid.delete()
-    return redirect('listlibrarian')
-  context = {
-    'liblistid': liblistid
-  }
-  return render(request, 'libraryv2/deletelibrarian.html', context)
-
-def requestbook(request, id):
-  x= Person.objects.get(id=id)
-  b =x.bookissue_set.count()
-  if b >= 3:
-    return render(request, 'libraryv2/norequestbook.html')
-  else:
-    form = requestbookform(request.POST)
     if request.method =='POST':
-      form = requestbookform(request.POST)
+      form= Issueform(request.POST)
       if form.is_valid():
         form.save()
-        form = requestbookform()
-        return render(request, 'libraryv2/requestbook.html', {'form':form})
+        form =Issueform()
+        return render(request,'libraryv2/issuebook.html', {'form': form})
     else:
-      form = requestbookform()
-      return render(request, 'libraryv2/requestbook.html',{'form':form})
+      form = Issueform()
+    return render(request, 'libraryv2/issuebook.html',{'form': form})
+  else:
+    return HttpResponseRedirect('login')
+
+@login_required(login_url='/accounts/login/')
+def Issuebookdelete(request, id):
+  if request.user.is_authenticated:
+    delbookissue = Bookissue.objects.get(id = id)
+    if request.method=='POST':
+      delbookissue.delete()
+      return redirect('Issuedbooks')
+    context = {
+      'delbookissue': delbookissue
+    }
+    return render(request, 'libraryv2/deletebookissued.html', context)
+  else:
+    return HttpResponseRedirect('login')
+@login_required(login_url='/accounts/login/')
+def Issuebookupdate(request, id):
+  if request.user.is_authenticated:
+    updatebookissue=Bookissue.objects.get(id=id)
+    form = Issueform(request.POST or None, instance= updatebookissue)
+    if form.is_valid():
+      form.save()
+    return render(request,'libraryv2/Issuebookupdate.html',{'form':form})
+  else:
+    return HttpResponseRedirect('login')
+
+@login_required(login_url='/accounts/login/')
+def Issuedbooks(request):
+  if request.user.is_authenticated:
+    query =Bookissue.objects.all()
+    return render(request, 'libraryv2/issuedbooks.html', {'query': query})
+  else:
+    return HttpResponseRedirect('login')
+
+@login_required(login_url='/accounts/login/')
+def studentdetail(request, id):
+  if request.user.is_authenticated:
+    student = Person.objects.filter(id = id) 
+    x= Person.objects.get(id=id)
+    y=x.bookissue_set.all()
+    b =x.bookissue_set.count()
+    print(y)
+    context ={
+      'student':student,
+      'y':y,
+      'b': b,
+    }
+    return render(request, 'libraryv2/studentdetail.html',context)
+  else:
+    return HttpResponseRedirect('login')
+
+
+@login_required(login_url='/accounts/login/')
+def Addlibrarian(request):
+  if request.user.is_authenticated:
+    form = Librarianform(request.POST)
+    if request.method=='POST':
+      form = Librarianform(request.POST)
+      if form.is_valid():
+        form.save()
+        form=Librarianform()
+        return render(request, 'libraryv2/addlibrarian.html', {'form': form})
+    else:
+      form = Librarianform()
+      return render(request, 'libraryv2/addlibrarian.html', {'form': form})
+  else:
+    return HttpResponseRedirect('login')
+@login_required(login_url='/accounts/login/')
+def  librarianlist(request):
+  if request.user.is_authenticated:
+    liblist=Librarian.objects.all()
+    return render(request, 'libraryv2/listlibrarian.html', {'liblist':liblist})
+  else:
+    return HttpResponseRedirect('login')
+
+@login_required(login_url='/accounts/login/')
+def updatelibrarian(request, id):
+  if request.user.is_authenticated:
+    liblistid = Librarian.objects.get(id = id)
+    form = Librarianform(request.POST or None, instance=liblistid)
+    if form.is_valid():
+      form.save()
+      form = Librarianform()
+      return redirect('librarianlist')
+    context={'liblistid':liblistid,'form':form , }
+    return render(request, 'libraryv2/updatelibrarian.html', context)
+  else:
+    return HttpResponseRedirect('login') 
+ 
+@login_required(login_url='/accounts/login/') 
+def deletelibrarian(request, id):
+  if request.user.is_authenticated:
+    liblistid = Librarian.objects.get(id = id)
+    if request.method=='POST':
+      liblistid.delete()
+      return redirect('listlibrarian')
+    context = {
+      'liblistid': liblistid
+    }
+    return render(request, 'libraryv2/deletelibrarian.html', context)
+  else:
+    return HttpResponseRedirect('login')
+@login_required(login_url='/accounts/login/')
+def requestbook(request, id):
+  if request.user.is_authenticated:
+    x= Person.objects.get(id=id)
+    b =x.bookissue_set.count()
+    if b >= 3:
+      return render(request, 'libraryv2/norequestbook.html')
+    else:
+      form = requestbookform(request.POST)
+      if request.method =='POST':
+        form = requestbookform(request.POST)
+        if form.is_valid():
+          form.save()
+          form = requestbookform()
+          return render(request, 'libraryv2/requestbook.html', {'form':form})
+      else:
+        form = requestbookform()
+        return render(request, 'libraryv2/requestbook.html',{'form':form})
+  else:
+    return HttpResponseRedirect('login')
 
 
   
