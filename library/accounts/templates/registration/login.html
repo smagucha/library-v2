@@ -1,0 +1,22 @@
+{%extends 'accounts/base.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'login.css' %}"  rel = 'stylesheet'>
+  <form class="modal-content animate" method="post" action="">
+    <div class="container">
+    {% csrf_token %}
+    {{form}}
+    <button type="submit">login</button>
+    <label>
+        <input type="checkbox" checked="checked" name="remember"> Remember me
+      </label>
+      <span class="psw">
+        create an account with us  <a href="{% url 'register' %}">sign up</a>
+      </span>
+    </div>
+    <div class="container" style="background-color:#f1f1f1">
+      <button type="button"  class="cancelbtn">Cancel</button>
+      <span class="psw">Forgot <a href="/accounts/reset_password/">password?</a></span>
+    </div>
+  </form>
+{%endblock%}

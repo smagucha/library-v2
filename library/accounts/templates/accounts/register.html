@@ -1,0 +1,26 @@
+{%extends 'accounts/base.html'%}
+{%load static%}
+{%block content%}
+<link href="{% static 'signup.css' %}"  rel = 'stylesheet'>
+<div id="id01" class="modal">
+ 
+  <form class="modal-content" action="" method="Post">
+    <div class="container">
+      <h1>Sign Up</h1>
+      <p>Please fill in this form to create an account.</p>
+      <hr>
+      <h1>Create an account</h1>
+    {{ user_form.as_p }}
+    {% csrf_token %}
+      <label>
+        <input type="checkbox" checked="checked" name="remember" style="margin-bottom:15px"> Remember me
+      </label>
+      <div class="clearfix">
+        <button type="button" onclick="document.getElementById('id01').style.display='none'" class="cancelbtn">Cancel</button>
+        <button type="submit" class="signupbtn">Sign Up</button>
+      </div>
+    </div>
+  </form>
+</div>
+{%endblock%}
+
