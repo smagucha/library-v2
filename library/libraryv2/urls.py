@@ -14,11 +14,12 @@ urlpatterns=[
 	path('Issuebook', views.Issuebook),
 	path('Issuedbooks', views.Issuedbooks),
 	path('studentdetail/<int:id>/', views.studentdetail),
-	path('returnbook', views.returnbook),
 	path('Addlibrarian', views.Addlibrarian),
 	path('librarianlist', views.librarianlist, name='librarianlist'),
 	path('updatelibrarian/<int:id>/update', views.updatelibrarian, ),
 	path('deletelibrarian/<int:id>/delete', views.deletelibrarian),
-	path('requestbook/<int:id>/', views.requestbook)
+	path('requestbook/<int:id>/', views.requestbook),
+	path('deletebookissue/<int:id>/delete', views.Issuebookdelete),
+	path('Issuebookupdate/<int:id>/update', views.Issuebookupdate, ),
 ]
 

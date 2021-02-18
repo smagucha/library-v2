@@ -120,6 +120,23 @@ def Issuebook(request):
     form = Issueform()
   return render(request, 'libraryv2/issuebook.html',{'form': form})
 
+def Issuebookdelete(request, id):
+  delbookissue = Bookissue.objects.get(id = id)
+  if request.method=='POST':
+    delbookissue.delete()
+    return redirect('Issuedbooks')
+  context = {
+    'delbookissue': delbookissue
+  }
+  return render(request, 'libraryv2/deletebookissued.html', context)
+
+def Issuebookupdate(request, id):
+  updatebookissue=Bookissue.objects.get(id=id)
+  form = Issueform(request.POST or None, instance= updatebookissue)
+  if form.is_valid():
+    form.save()
+  return render(request,'libraryv2/Issuebookupdate.html',{'form':form})
+
 
 def Issuedbooks(request):
   query =Bookissue.objects.all()
@@ -136,12 +153,9 @@ def studentdetail(request, id):
     'y':y,
     'b': b,
   }
-
-  
   return render(request, 'libraryv2/studentdetail.html',context)
 
-def returnbook(request):
-  return render(request, 'libraryv2/returnbook.html')
+
 
 def Addlibrarian(request):
   form = Librarianform(request.POST)
@@ -198,11 +212,6 @@ def requestbook(request, id):
     else:
       form = requestbookform()
       return render(request, 'libraryv2/requestbook.html',{'form':form})
-
-
-
-  
-  #return render(request, 'libraryv2/requestbook.html')
 
 
   
