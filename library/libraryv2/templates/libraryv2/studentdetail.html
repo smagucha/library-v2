@@ -35,6 +35,6 @@
 </table>
 </center>
 {%for student in student%}
-<a href="requestbook/{{student.id}}/" class="button">request book</a>
+<a href="{% url 'requestbook' student.id %}" class="button">request book</a>
 {%endfor%}
 {%endblock%}

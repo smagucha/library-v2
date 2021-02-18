@@ -2,7 +2,7 @@
 {% load static %}
 {%block content%}
 <link href="{% static 'css/table.css'%}" rel="stylesheet">
-<a href="Addlibrarian" class="button">add librarian</a>
+<a href="{% url 'Addlibrarian' %}" class="button">add librarian</a>
     <form>
         <input type="text" name="q" placeholder="search" class = 'search'>
     </form>
@@ -28,8 +28,8 @@
             <td> {{liblist.email}}</td>
             <td> {{liblist.phone}}</td>
             <td> {{liblist.librarianid}}</td>
-            <td><a href="updatelibrarian/{{liblist.id}}/update" class="updatelink">update</a></td>
-            <td><a href="deletelibrarian/{{liblist.id}}/delete" class="deletelink">delete</a></td>
+            <td><a href="{% url 'updatelibrarian' liblist.id %}" class="updatelink">update</a></td>
+            <td><a href="{% url 'deletelibrarian' liblist.id %}" class="deletelink">delete</a></td>
         </tr>
          {% endfor %}
     </tbody>

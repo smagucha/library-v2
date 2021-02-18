@@ -40,8 +40,8 @@
             <td>lost</td>
             <td>reversed</td>
             <td>remaining</td>
-            <td><a href="updatebook/{{query.id}}/update" class="updatelink">update</a></td>
-            <td><a href="deletebook/{{query.id}}/delete" class="deletelink">delete</a></td>
+            <td><a href="{% url 'updatebook' query.id %}" class="updatelink">update</a></td>
+            <td><a href="{% url 'deletebook' query.id %}" class="deletelink">delete</a></td>
         </tr>
          {% endfor %}
     </tbody>

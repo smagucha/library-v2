@@ -26,12 +26,12 @@
     	{% for obj in student %}
         <tr>
             <td>  {{forloop.counter}}</td>
-            <td> <a href="studentdetail/{{obj.id}}/">{{obj.name}}</a></td>
+            <td> <a href="{% url 'studentdetail' obj.id %}">{{obj.name}}</a></td>
             <td> {{obj.email}}</td>
             <td> {{obj.phone}}</td>
             <td> {{obj.studentid}}</td>
-            <td><a href=" updatestudent/{{obj.id}}/update" class="updatelink">update</a></td>
-            <td><a href="deletestudent/{{obj.id}}/delete" class="deletelink">delete</a></td>
+             <td><a href=" {% url 'updatestudent' obj.id %}" class="updatelink">update</a></td>
+            <td><a href="{% url 'deletestudent' obj.id %}" class="deletelink">delete</a></td>
         </tr>
          {% endfor %}
     </tbody>

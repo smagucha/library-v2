@@ -13,12 +13,12 @@
 </head>
 <body>
 	<div class="topnav" id="myTopnav">
-	  <a href="/" class="active">Home</a>
-	  <a href="allbooks">books</a>
-	  <a href="liststudent">student</a>
-	  <a href="Issuedbooks">Issued books</a>
-	  <a href="librarianlist">librarian list</a>
-	  <a href="accounts/logout/" style="float: right">logout</a>
+	  <a href="{% url '' %}" class="active">Home</a>
+	  <a href="{% url 'allbooks' %}">books</a>
+	  <a href="{% url 'liststudent' %}">student</a>
+	  <a href="{% url 'Issuedbooks' %}">Issued books</a>
+	  <a href="{% url 'librarianlist' %}">librarian list</a>
+	  <a href="{% url 'logout' %}" style="float: right">logout</a>
 	  <a href="javascript:void(0);" class="icon" onclick="myFunction()">
 	    <i class="fa fa-bars"></i>
 	  </a>
