@@ -113,5 +113,13 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT=os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT=os.path.join(BASE_DIR, 'media')
-CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+
+
+LOGIN_URL ='/accounts/login/'
+LOGOUT_URL = 'accounts/logout'
+STATIC_URL = '/static/'
+LOGIN_REDIRECT_URL=''
+
+
 

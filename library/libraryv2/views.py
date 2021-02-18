@@ -5,20 +5,24 @@ from django.shortcuts import get_object_or_404
 from django.db.models import Q
 from django.contrib import messages
 from django.db.models import Count
+from django.contrib.auth.decorators import login_required
 
-
+@login_required(login_url='/accounts/login/')
 def bookform(request):
-	form = BookForm(request.POST)
-	if request.method == 'POST':
-		form = BookForm(request.POST)
-		if form.is_valid():
-			form.save()
-			print(form)
-			form = BookForm()
-			return render(request, 'libraryv2/book_form.html')
-	else:
-		form = BookForm()
-	return render(request, 'libraryv2/book_form.html', {'form': form})
+  if request.user.is_authenticated:
+  	form = BookForm(request.POST)
+  	if request.method == 'POST':
+  		form = BookForm(request.POST)
+  		if form.is_valid():
+  			form.save()
+  			print(form)
+  			form = BookForm()
+  			return render(request, 'libraryv2/book_form.html')
+  	else:
+  		form = BookForm()
+  	return render(request, 'libraryv2/book_form.html', {'form': form})
+  else:
+    return HttpResponseRedirect('login')
 
 
 def allbook(request):
