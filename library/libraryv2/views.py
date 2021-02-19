@@ -6,8 +6,11 @@ from django.db.models import Q
 from django.contrib import messages
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import permission_required
 
-@login_required(login_url='/accounts/login/')
+
+
+@permission_required('Book.add_book', login_url='/accounts/login/')
 def bookform(request):
   if request.user.is_authenticated:
   	form = BookForm(request.POST)

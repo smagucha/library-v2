@@ -3,13 +3,13 @@
 {%block content%}
 <link href="{% static 'css/table.css'%}" rel="stylesheet">
 <a href="addstudent" class="button">add student</a>
-<a href="bookform" class="button">add book</a>
+<a href="bookform" class="button">add book</a><br>
 
     <form>
         <input type="text" name="q" placeholder="search" class='search'>
-    </form>
-<center>
-<table class="styled-table">
+    </form><br>
+
+<table >
     <thead>
         <tr>
         	<th>No</th>
@@ -36,5 +36,5 @@
          {% endfor %}
     </tbody>
 </table>
-</center>
+
 {%endblock%}

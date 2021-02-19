@@ -10,9 +10,8 @@
 	student ID: {{student.studentid}}<br>
 	{%endfor%}
 	<h1>books award</h1>
-<h3>you have been {{b}} books from the libary</h3>
-<center>
-<table class="styled-table">
+<h3>you have been {{b}} books from the libary</h3><br>
+<table >
     <thead>
         <tr>
         	<th>No</th>
@@ -32,8 +31,7 @@
         </tr>
          {%endfor%}
     </tbody>
-</table>
-</center>
+</table><br>
 {%for student in student%}
 <a href="{% url 'requestbook' student.id %}" class="button">request book</a>
 {%endfor%}

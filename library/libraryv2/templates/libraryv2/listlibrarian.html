@@ -2,12 +2,12 @@
 {% load static %}
 {%block content%}
 <link href="{% static 'css/table.css'%}" rel="stylesheet">
-<a href="{% url 'Addlibrarian' %}" class="button">add librarian</a>
+<a href="{% url 'Addlibrarian' %}" class="button">add librarian</a><br>
     <form>
         <input type="text" name="q" placeholder="search" class = 'search'>
-    </form>
-    <center>
-<table class="styled-table">
+    </form><br>
+    <br>
+<table >
     <thead>
         <tr>
         	<th>No</th>
@@ -34,5 +34,4 @@
          {% endfor %}
     </tbody>
 </table>
-</center>
 {%endblock%}

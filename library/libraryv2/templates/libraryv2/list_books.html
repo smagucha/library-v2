@@ -4,11 +4,12 @@
 <link href="{% static 'css/table.css'%}" rel="stylesheet">
 <a href="bookcatergory" class="button">Book Catergory</a>
 <a href="bookform" class="button">add book</a>
+<br>
     <form>
         <input type="text" name="q" placeholder="search" class="search">
     </form>
-    <center>
-<table class="styled-table">
+<br>
+<table>
     <thead>
         <tr>
         	<th>No</th>
@@ -46,5 +47,5 @@
          {% endfor %}
     </tbody>
 </table>
-</center>
+
 {%endblock%}
