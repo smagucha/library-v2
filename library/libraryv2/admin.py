@@ -4,11 +4,12 @@ from .models import (
  	Book,BookFormat, Librarian,Person,BookCatergory,Bookissue
  	)
 
-@admin.register(Person)
-class PersonAdmin(admin.ModelAdmin):
-    search_fields = ['name', 'email', 'phone',]
-    list_display = ['name', 'email', 'phone',]
-    #list_filter = []
+# @admin.register(Person)
+# class PersonAdmin(admin.ModelAdmin):
+#     search_fields = ['name', 'email', 'phone',]
+#     list_display = ['name', 'email', 'phone',]
+#     #list_filter = []
+admin.site.register(Person)
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
@@ -22,10 +23,12 @@ class BookissueAdmin(admin.ModelAdmin):
     list_display = ['student', 'book', 'given_date','due_date',]
     #list_filter = []
 
-@admin.register(Librarian)
-class LibrarianAdmin(admin.ModelAdmin):
-    search_fields = ['name', 'email', 'phone','librarianid',]
-    list_display = ['name', 'email', 'phone','librarianid',]
+
+admin.site.register(Librarian)
+# @admin.register(Librarian)
+# class LibrarianAdmin(admin.ModelAdmin):
+#     search_fields = ['name', 'email', 'phone','librarianid',]
+#     list_display = ['name', 'email', 'phone','librarianid',]
     #list_filter = []
 
 @admin.register(BookCatergory)

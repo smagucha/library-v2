@@ -1,8 +1,9 @@
+from django.conf import settings
+from django.contrib.auth.models import User
 from django.db import models
 
 class Person(models.Model):
-	name = models.CharField(max_length= 200)
-	email = models.EmailField()
+	user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
 	phone =models.PositiveIntegerField()
 	studentid = models.CharField(max_length= 200)
 
@@ -10,8 +11,7 @@ class Person(models.Model):
 		return self.name
 
 class Librarian(models.Model):
-	name = models.CharField(max_length= 200)
-	email = models.EmailField()
+	user = models.OneToOneField(User, models.CASCADE,  null = True)
 	phone =models.PositiveIntegerField()
 	librarianid = models.CharField(max_length= 200)
 

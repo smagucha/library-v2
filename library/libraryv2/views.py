@@ -10,7 +10,7 @@ from django.contrib.auth.decorators import permission_required
 
 
 
-@permission_required('Book.add_book', login_url='/accounts/login/')
+@permission_required('libraryv2.add_book', login_url='/accounts/login/')
 def bookform(request):
   if request.user.is_authenticated:
   	form = BookForm(request.POST)
@@ -27,7 +27,7 @@ def bookform(request):
   else:
     return HttpResponseRedirect('login')
 
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.view_book', login_url='/accounts/login/')
 def allbook(request):
   if request.user.is_authenticated:
     if 'q' in request.GET:
@@ -41,7 +41,7 @@ def allbook(request):
   else:
     return HttpResponseRedirect('login')
 
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.delete_book', login_url='/accounts/login/')
 def DeleteBook(request, id):
   if request.user.is_authenticated:
     delobj =Book.objects.get(id=id)
@@ -55,7 +55,7 @@ def DeleteBook(request, id):
   else:
     return HttpResponseRedirect('login')
 
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.change_book', login_url='/accounts/login/')
 def Updatebook(request, id):
   if request.user.is_authenticated:
   	obj = Book.objects.get(id=id)
@@ -75,7 +75,7 @@ def home(request):
   else:
     return HttpResponseRedirect('login')
 
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.add_bookcatergory', login_url='/accounts/login/')
 def Addbookcatergory(request):
   if request.user.is_authenticated:
     form = BookCatergoryForm(request.POST)
@@ -91,7 +91,7 @@ def Addbookcatergory(request):
   else:
     return HttpResponseRedirect('login')
 
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.add_person', login_url='/accounts/login/')
 def addstudent(request):
   if request.user.is_authenticated:
     form = StudentForm(request.POST)
@@ -107,7 +107,7 @@ def addstudent(request):
   else:
     return HttpResponseRedirect('login')
 
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.add_person', login_url='/accounts/login/')
 def liststudent(request):
   if request.user.is_authenticated:
     if 'q' in request.GET:
@@ -120,7 +120,8 @@ def liststudent(request):
     return render(request, 'libraryv2/liststudent.html', {'student': student})
   else:
     return HttpResponseRedirect('login')
-@login_required(login_url='/accounts/login/')
+
+@permission_required('libraryv2.change_person', login_url='/accounts/login/')
 def updatestudent(request, id):
   if request.user.is_authenticated:
     student = Person.objects.get(id=id)
@@ -133,7 +134,7 @@ def updatestudent(request, id):
   else:
     return HttpResponseRedirect('login')
 
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.delete_person', login_url='/accounts/login/')
 def deletestudent(request, id):
   if request.user.is_authenticated:
     delstudent= Person.objects.get(id =id)
@@ -148,7 +149,7 @@ def deletestudent(request, id):
     return HttpResponseRedirect('login')
 
 
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.add_bookissue', login_url='/accounts/login/')
 def Issuebook(request):
   if request.user.is_authenticated:
     form= Issueform(request.POST)
@@ -164,7 +165,7 @@ def Issuebook(request):
   else:
     return HttpResponseRedirect('login')
 
-@login_required(login_url='/accounts/login/')
+@permission_required('ibraryv2.delete_bookissue', login_url='/accounts/login/')
 def Issuebookdelete(request, id):
   if request.user.is_authenticated:
     delbookissue = Bookissue.objects.get(id = id)
@@ -177,7 +178,8 @@ def Issuebookdelete(request, id):
     return render(request, 'libraryv2/deletebookissued.html', context)
   else:
     return HttpResponseRedirect('login')
-@login_required(login_url='/accounts/login/')
+
+@permission_required('ibraryv2.change_bookissue', login_url='/accounts/login/')
 def Issuebookupdate(request, id):
   if request.user.is_authenticated:
     updatebookissue=Bookissue.objects.get(id=id)
@@ -188,7 +190,7 @@ def Issuebookupdate(request, id):
   else:
     return HttpResponseRedirect('login')
 
-@login_required(login_url='/accounts/login/')
+@permission_required('ibraryv2.view_bookissue', login_url='/accounts/login/')
 def Issuedbooks(request):
   if request.user.is_authenticated:
     query =Bookissue.objects.all()
@@ -196,7 +198,7 @@ def Issuedbooks(request):
   else:
     return HttpResponseRedirect('login')
 
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.add_requestbook', login_url='/accounts/login/')
 def studentdetail(request, id):
   if request.user.is_authenticated:
     student = Person.objects.filter(id = id) 
@@ -214,7 +216,7 @@ def studentdetail(request, id):
     return HttpResponseRedirect('login')
 
 
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.add_librarian', login_url='/accounts/login/')
 def Addlibrarian(request):
   if request.user.is_authenticated:
     form = Librarianform(request.POST)
@@ -229,7 +231,7 @@ def Addlibrarian(request):
       return render(request, 'libraryv2/addlibrarian.html', {'form': form})
   else:
     return HttpResponseRedirect('login')
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.view_librarian', login_url='/accounts/login/')
 def  librarianlist(request):
   if request.user.is_authenticated:
     liblist=Librarian.objects.all()
@@ -237,7 +239,7 @@ def  librarianlist(request):
   else:
     return HttpResponseRedirect('login')
 
-@login_required(login_url='/accounts/login/')
+@permission_required('libraryv2.change_librarian', login_url='/accounts/login/')
 def updatelibrarian(request, id):
   if request.user.is_authenticated:
     liblistid = Librarian.objects.get(id = id)
@@ -251,7 +253,7 @@ def updatelibrarian(request, id):
   else:
     return HttpResponseRedirect('login') 
  
-@login_required(login_url='/accounts/login/') 
+@permission_required('libraryv2.delete_librarian', login_url='/accounts/login/')
 def deletelibrarian(request, id):
   if request.user.is_authenticated:
     liblistid = Librarian.objects.get(id = id)
@@ -264,7 +266,8 @@ def deletelibrarian(request, id):
     return render(request, 'libraryv2/deletelibrarian.html', context)
   else:
     return HttpResponseRedirect('login')
-@login_required(login_url='/accounts/login/')
+
+@permission_required('libraryv2.add_requestbook', login_url='/accounts/login/')
 def requestbook(request, id):
   if request.user.is_authenticated:
     x= Person.objects.get(id=id)
