@@ -7,6 +7,8 @@ from django.contrib import messages
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
+from .decorators import allowed_users
+from django.contrib.auth.models import User, Group
 
 
 
@@ -69,13 +71,16 @@ def Updatebook(request, id):
     return HttpResponseRedirect('login')
 
 @login_required(login_url='/accounts/login/')
+#@allowed_users(allowed_roles=['studentgroup','Groupadmin','Grouplibrarian'])
 def home(request):
   if request.user.is_authenticated:
     return render(request, 'libraryv2/home.html')
   else:
     return HttpResponseRedirect('login')
 
-@permission_required('libraryv2.add_bookcatergory', login_url='/accounts/login/')
+#@permission_required('libraryv2.add_bookcatergory', login_url='/accounts/login/')
+@login_required(login_url='/accounts/login/')
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Addbookcatergory(request):
   if request.user.is_authenticated:
     form = BookCatergoryForm(request.POST)
