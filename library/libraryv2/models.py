@@ -7,8 +7,8 @@ class Person(models.Model):
 	phone =models.PositiveIntegerField()
 	studentid = models.CharField(max_length= 200)
 
-	def __str__(self):
-		return self.name
+	# def __str__(self):
+	# 	return self.user
 
 class Librarian(models.Model):
 	user = models.OneToOneField(User, models.CASCADE,  null = True)

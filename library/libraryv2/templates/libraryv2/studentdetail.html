@@ -4,8 +4,6 @@
 <link href="{% static 'css/table.css'%}" rel="stylesheet">
 <h1>student personal details</h1>
 	{%for student in student%}
-	name: {{student.name}}<br>
-	email: {{student.email}}<br>
 	phone: {{student.phone}}<br>
 	student ID: {{student.studentid}}<br>
 	{%endfor%}

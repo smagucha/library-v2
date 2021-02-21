@@ -32,6 +32,8 @@
    {% if user.is_authenticated %}
    <img src="{% static 'img/user.png' %}" alt="My image" width="100" height="100"><br>
    welcome {{ user.username }}
+    {% else %}
+    
     {%endif%}
   </div>
   
