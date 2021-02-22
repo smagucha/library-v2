@@ -10,9 +10,6 @@ from django.contrib.auth.decorators import permission_required
 from .decorators import allowed_users
 from django.contrib.auth.models import User, Group
 
-
-
-#@permission_required('libraryv2.add_book', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def bookform(request):
@@ -31,7 +28,6 @@ def bookform(request):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('libraryv2.view_book', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def allbook(request):
@@ -47,7 +43,6 @@ def allbook(request):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('libraryv2.delete_book', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin'])
 def DeleteBook(request, id):
@@ -65,7 +60,6 @@ def DeleteBook(request, id):
 
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
-#@permission_required('libraryv2.change_book', login_url='/accounts/login/')
 def Updatebook(request, id):
   if request.user.is_authenticated:
   	obj = Book.objects.get(id=id)
@@ -86,7 +80,6 @@ def home(request):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('libraryv2.add_bookcatergory', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Addbookcatergory(request):
@@ -104,7 +97,6 @@ def Addbookcatergory(request):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('libraryv2.add_person', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin'])
 def addstudent(request):
@@ -122,7 +114,6 @@ def addstudent(request):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('libraryv2.add_person', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def liststudent(request):
@@ -138,7 +129,6 @@ def liststudent(request):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('libraryv2.change_person', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian', 'studentgroup'])
 def updatestudent(request, id):
@@ -153,7 +143,6 @@ def updatestudent(request, id):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('libraryv2.delete_person', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin'])
 def deletestudent(request, id):
@@ -169,8 +158,6 @@ def deletestudent(request, id):
   else:
     return HttpResponseRedirect('login')
 
-
-#@permission_required('libraryv2.add_bookissue', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuebook(request):
@@ -188,7 +175,6 @@ def Issuebook(request):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('ibraryv2.delete_bookissue', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuebookdelete(request, id):
@@ -204,7 +190,6 @@ def Issuebookdelete(request, id):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('ibraryv2.change_bookissue', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuebookupdate(request, id):
@@ -217,7 +202,6 @@ def Issuebookupdate(request, id):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('ibraryv2.view_bookissue', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuedbooks(request):
@@ -227,7 +211,6 @@ def Issuedbooks(request):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('libraryv2.add_requestbook', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','studentgroup'])
 def studentdetail(request, id):
@@ -246,8 +229,6 @@ def studentdetail(request, id):
   else:
     return HttpResponseRedirect('login')
 
-
-#@permission_required('libraryv2.add_librarian', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin'])
 def Addlibrarian(request):
@@ -264,7 +245,7 @@ def Addlibrarian(request):
       return render(request, 'libraryv2/addlibrarian.html', {'form': form})
   else:
     return HttpResponseRedirect('login')
-#@permission_required('libraryv2.view_librarian', login_url='/accounts/login/')
+
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def  librarianlist(request):
@@ -274,7 +255,6 @@ def  librarianlist(request):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('libraryv2.change_librarian', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin'])
 def updatelibrarian(request, id):
@@ -290,7 +270,6 @@ def updatelibrarian(request, id):
   else:
     return HttpResponseRedirect('login') 
  
-#@permission_required('libraryv2.delete_librarian', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin'])
 def deletelibrarian(request, id):
@@ -306,7 +285,6 @@ def deletelibrarian(request, id):
   else:
     return HttpResponseRedirect('login')
 
-#@permission_required('libraryv2.add_requestbook', login_url='/accounts/login/')
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['studentgroup', 'Groupadmin'])
 def requestbook(request, id):
