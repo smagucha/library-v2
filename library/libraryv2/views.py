@@ -218,12 +218,13 @@ def studentdetail(request, id):
     student = Person.objects.filter(id = id) 
     x= Person.objects.get(id=id)
     y=x.bookissue_set.all()
+    book=x.requestbook_set.all()
     b =x.bookissue_set.count()
-    print(y)
     context ={
       'student':student,
       'y':y,
       'b': b,
+      'book':book
     }
     return render(request, 'libraryv2/studentdetail.html',context)
   else:
@@ -306,6 +307,9 @@ def requestbook(request, id):
         return render(request, 'libraryv2/requestbook.html',{'form':form})
   else:
     return HttpResponseRedirect('login')
+
+
+
 
 
   

@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (
- 	Book,BookFormat, Librarian,Person,BookCatergory,Bookissue
+ 	Book,BookFormat, Librarian,Person,BookCatergory,Bookissue, RequestBook
  	)
 
 # @admin.register(Person)
@@ -10,6 +10,7 @@ from .models import (
 #     list_display = ['name', 'email', 'phone',]
 #     #list_filter = []
 admin.site.register(Person)
+admin.site.register(RequestBook)
 
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):

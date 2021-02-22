@@ -30,6 +30,28 @@
          {%endfor%}
     </tbody>
 </table><br>
+<h1>request book</h1>
+<table >
+    <thead>
+        <tr>
+            <th>No</th>
+            <th>Title</th>
+            <th>catergory</th>          
+        </tr>
+    </thead>
+    <tbody>
+       
+       
+        <tr>
+             {%for book in book%}
+            <td>  {{forloop.counter}}</td>
+            <td>{{book.title}}</td>
+            <td>{{book.catergory}}</td>
+            {%endfor%}
+        </tr>
+    </tbody>
+</table><br>  
+
 {%for student in student%}
 <a href="{% url 'requestbook' student.id %}" class="button">request book</a>
 {%endfor%}

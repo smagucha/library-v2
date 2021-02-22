@@ -59,6 +59,7 @@ class Bookissue(models.Model):
 	due_date = models.DateField()
 
 class RequestBook(models.Model):
+	yourname =models.ForeignKey(Person, on_delete=models.CASCADE)
 	title = models.CharField(max_length = 200)
 	catergory = models.ForeignKey(BookCatergory, on_delete=models.CASCADE)
 

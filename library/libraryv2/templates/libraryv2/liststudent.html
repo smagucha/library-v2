@@ -3,8 +3,6 @@
 {%block content%}
 <link href="{% static 'css/table.css'%}" rel="stylesheet">
 <a href="addstudent" class="button">add student</a>
-<a href="bookform" class="button">add book</a><br>
-
     <form>
         <input type="text" name="q" placeholder="search" class='search'>
     </form><br>
@@ -14,7 +12,6 @@
         <tr>
         	<th>No</th>
             <th>student</th>
-            <th>email</th>
             <th>phone</th>
             <th>student id</th>
             <th>Update</th>
@@ -26,8 +23,7 @@
     	{% for obj in student %}
         <tr>
             <td>  {{forloop.counter}}</td>
-            <td> <a href="{% url 'studentdetail' obj.id %}">{{obj.name}}</a></td>
-            <td> {{obj.email}}</td>
+            <td> <a href="{% url 'studentdetail' obj.id %}">{{obj.user}}</a></td>
             <td> {{obj.phone}}</td>
             <td> {{obj.studentid}}</td>
              <td><a href=" {% url 'updatestudent' obj.id %}" class="updatelink">update</a></td>
