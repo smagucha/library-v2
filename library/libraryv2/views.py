@@ -19,7 +19,7 @@ def bookform(request):
   		if form.is_valid():
   			form.save()
   			form = BookForm()
-  			return render(request, 'libraryv2/book_form.html')
+  			return redirect('allbooks')
   	else:
   		form = BookForm()
   	return render(request, 'libraryv2/book_form.html', {'form': form})
@@ -82,7 +82,6 @@ def home(request):
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Addbookcatergory(request):
   if request.user.is_authenticated:
-    form = BookCatergoryForm(request.POST)
     if request.method == 'POST':
       form = BookCatergoryForm(request.POST)
       if form.is_valid():
@@ -99,7 +98,6 @@ def Addbookcatergory(request):
 @allowed_users(allowed_roles=['Groupadmin'])
 def addstudent(request):
   if request.user.is_authenticated:
-    form = StudentForm(request.POST)
     if request.method == 'POST':
       form = StudentForm(request.POST)
       if form.is_valid():
@@ -160,13 +158,12 @@ def deletestudent(request, id):
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuebook(request):
   if request.user.is_authenticated:
-    form= Issueform(request.POST)
     if request.method =='POST':
       form= Issueform(request.POST)
       if form.is_valid():
         form.save()
         form =Issueform()
-        return render(request,'libraryv2/issuebook.html', {'form': form})
+        return redirect('Issuedbooks')
     else:
       form = Issueform()
     return render(request, 'libraryv2/issuebook.html',{'form': form})
@@ -232,13 +229,12 @@ def studentdetail(request, id):
 @allowed_users(allowed_roles=['Groupadmin'])
 def Addlibrarian(request):
   if request.user.is_authenticated:
-    form = Librarianform(request.POST)
     if request.method=='POST':
       form = Librarianform(request.POST)
       if form.is_valid():
         form.save()
         form=Librarianform()
-        return render(request, 'libraryv2/addlibrarian.html', {'form': form})
+        return redirect('librarianlist')
     else:
       form = Librarianform()
       return render(request, 'libraryv2/addlibrarian.html', {'form': form})
@@ -276,7 +272,7 @@ def deletelibrarian(request, id):
     liblistid = Librarian.objects.get(id = id)
     if request.method=='POST':
       liblistid.delete()
-      return redirect('listlibrarian')
+      return redirect('librarianlist')
     context = {
       'liblistid': liblistid
     }
@@ -311,6 +307,11 @@ def requestbook(request, id):
 def requestedbooks(request):
   allb= RequestBook.objects.all()
   return render(request,'libraryv2/allrequestbook.html',{'allb':allb})
+
+
+def Bookcatergory(request):
+  bookcate=BookCatergory.objects.all()
+  return render(request, 'libraryv2/bookcatergory.html',{'bookcate':bookcate})
 
 
 

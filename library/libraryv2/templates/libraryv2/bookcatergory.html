@@ -11,23 +11,15 @@
     <thead>
         <tr>
         	<th>No</th>
-            <th> Librarian name</th>
-            <th>phone</th>
-            <th>Libarian id</th>
-            <th>Update</th>
-            <th>delete</th>
+            <th> catergory name</th>
         </tr>
     </thead>
     <tbody>
        
-    	{% for liblist in liblist %}
+    	{% for object in bookcate %}
         <tr>
             <td>  {{forloop.counter}}</td>
-            <td> {{liblist.user}}</td>
-            <td> {{liblist.phone}}</td>
-            <td> {{liblist.librarianid}}</td>
-            <td><a href="{% url 'updatelibrarian' liblist.id %}" class="updatelink">update</a></td>
-            <td><a href="{% url 'deletelibrarian' liblist.id %}" class="deletelink">delete</a></td>
+            <td> {{object.name}}</td>
         </tr>
          {% endfor %}
     </tbody>
