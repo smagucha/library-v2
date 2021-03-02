@@ -9,6 +9,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from .decorators import allowed_users
 from django.contrib.auth.models import User, Group
+from django.http import HttpResponse
 
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
@@ -111,7 +112,7 @@ def addstudent(request):
     return HttpResponseRedirect('login')
 
 @login_required(login_url='/accounts/login/')
-@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
+#@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def liststudent(request):
   if request.user.is_authenticated:
     if 'q' in request.GET:
@@ -130,12 +131,16 @@ def liststudent(request):
 def updatestudent(request, id):
   if request.user.is_authenticated:
     student = Person.objects.get(id=id)
-    form = StudentForm(request.POST or None, instance= student)
-    if form.is_valid():
-      form.save()
-      form= StudentForm()
-      return redirect('liststudent')
-    return render(request, 'libraryv2/updatestudent.html', {'student':student,'form': form})
+    print(request.user.id, student.id)
+    if request.user.id != student.user.id:
+      return HttpResponse('cannot edit another student details')
+    else:
+      form = StudentForm(request.POST or None, instance= student)
+      if form.is_valid():
+        form.save()
+        form= StudentForm()
+        return redirect('liststudent')
+      return render(request, 'libraryv2/updatestudent.html', {'student':student,'form': form})
   else:
     return HttpResponseRedirect('login')
 

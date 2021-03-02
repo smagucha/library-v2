@@ -16,18 +16,19 @@
             <th>student id</th>
             <th>Update</th>
             <th>delete</th>
- 
+<!--  or hasperm 'libraryv2.change_permission' request.user  -->
         </tr>
     </thead>
     <tbody>
+        {{user.username}}
     	{% for obj in student %}
         <tr>
             <td>  {{forloop.counter}}</td>
             <td> <a href="{% url 'studentdetail' obj.id %}">{{obj.user}}</a></td>
             <td> {{obj.phone}}</td>
             <td> {{obj.studentid}}</td>
-             <td><a href=" {% url 'updatestudent' obj.id %}" class="updatelink">update</a></td>
-            <td><a href="{% url 'deletestudent' obj.id %}" class="deletelink">delete</a></td>
+                <td><a href=" {% url 'updatestudent' obj.id %}" class="updatelink">update</a></td>
+                <td><a href="{% url 'deletestudent' obj.id %}" class="deletelink">delete</a></td>
         </tr>
          {% endfor %}
     </tbody>
