@@ -21,4 +21,5 @@ urlpatterns=[
 	path('requestbook/<int:id>/', views.requestbook, name='requestbook'),
 	path('deletebookissue/<int:id>/delete', views.Issuebookdelete, name='issuebookdelete'),
 	path('Issuebookupdate/<int:id>/update', views.Issuebookupdate, name='issuebookupdate' ),
+	path('requestedbooks', views.requestedbooks, name='requestedbooks')
 ]

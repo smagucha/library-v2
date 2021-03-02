@@ -2,7 +2,6 @@
 {%load static%}
 {% load crispy_forms_tags %}
 {%block content%}
-
  <div class='container'>
 <form method='post'>
   {%csrf_token%}
@@ -10,4 +9,9 @@
   <button  type="submit"  class="button">submit</button>
 </form>
 </div>
+<script>
+var name='{{ user.username}}';
+document.getElementById('yourname').placeholder=name;
+</script>
+
 {%endblock%}

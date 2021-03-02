@@ -3,17 +3,20 @@ from django.contrib.auth.models import User
 from django.db import models
 
 class Person(models.Model):
-	user = models.OneToOneField(User, on_delete=models.CASCADE, null = True)
+	user = models.ForeignKey(User, on_delete=models.CASCADE, null = True)
 	phone =models.PositiveIntegerField()
 	studentid = models.CharField(max_length= 200)
 
-	# def __str__(self):
-	# 	return self.user
+	def __str__(self):
+		return self.user
 
 class Librarian(models.Model):
-	user = models.OneToOneField(User, models.CASCADE,  null = True)
+	user = models.ForeignKey(User, models.CASCADE,  null = True)
 	phone =models.PositiveIntegerField()
 	librarianid = models.CharField(max_length= 200)
+
+	def __str__(self):
+		return self.user
 
 class BookFormat(models.Model):
 	HARDCOVER='HARDCOVER'
@@ -34,6 +37,9 @@ class BookFormat(models.Model):
 		choices=book,
 		default=HARDCOVER,
     )
+
+	def __str__(self):
+		return self.Bookformat
 
 class BookCatergory(models.Model):
 	name= models.CharField(max_length= 200)
@@ -62,6 +68,9 @@ class RequestBook(models.Model):
 	yourname =models.ForeignKey(Person, on_delete=models.CASCADE)
 	title = models.CharField(max_length = 200)
 	catergory = models.ForeignKey(BookCatergory, on_delete=models.CASCADE)
+
+	# def __str__(self):
+	# 	return str(self.yourname)
 
 
 

@@ -1,0 +1,31 @@
+{% extends 'libraryv2/base.html' %}
+{% load static %}
+{%block content%}
+<link href="{% static 'css/table.css'%}" rel="stylesheet">
+<a href="{% url 'Addlibrarian' %}" class="button">add librarian</a><br>
+    <form>
+        <input type="text" name="q" placeholder="search" class = 'search'>
+    </form><br>
+    <br>
+<table >
+    <thead>
+        <tr>
+        	<th>No</th>
+            <th>student name</th>
+            <th>title book</th>
+            <th>catergory</th>
+        </tr>
+    </thead>
+    <tbody>
+       
+    	{% for allb in allb %}
+        <tr>
+            <td>  {{forloop.counter}}</td>
+            <td> {{allb.yourname}}</td>
+            <td> {{allb.title}}</td>
+            <td> {{allb.catergory}}</td>
+        </tr>
+         {% endfor %}
+    </tbody>
+</table>
+{%endblock%}

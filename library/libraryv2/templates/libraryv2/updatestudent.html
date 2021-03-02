@@ -3,6 +3,7 @@
 {% load crispy_forms_tags %}
 {% load static %}
  <div class='container'>
+ 	current user: {{ user.username }}
 <form method='post'>
   {%csrf_token%}
   {{form|crispy}}

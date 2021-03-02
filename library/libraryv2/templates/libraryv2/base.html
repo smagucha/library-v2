@@ -20,6 +20,7 @@
     <a href="{% url 'liststudent' %}">student</a>
     <a href="{% url 'Issuedbooks' %}">Issued books</a>
     <a href="{% url 'librarianlist' %}">librarian list</a>
+    <a href="{% url 'requestedbooks' %}">requested book</a>
     <a href="{% url 'logout' %}" style="float: right">logout</a>
     <a href="javascript:void(0);" class="icon" onclick="myFunction()">
     <i class="fa fa-bars"></i>
@@ -31,7 +32,7 @@
     <h2>logged in user</h2>
    {% if user.is_authenticated %}
    <img src="{% static 'img/user.png' %}" alt="My image" width="100" height="100"><br>
-   welcome {{ user.username }}
+   Current user {{ user.username }}
     {% else %}
     
     {%endif%}

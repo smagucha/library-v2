@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Book, BookCatergory, BookFormat, Person, Bookissue, Librarian
+from .models import Book, BookCatergory, BookFormat, Person, Bookissue, Librarian, RequestBook
 from .forms import BookForm, BookCatergoryForm, StudentForm,Issueform, Librarianform,requestbookform
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
@@ -14,12 +14,10 @@ from django.contrib.auth.models import User, Group
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def bookform(request):
   if request.user.is_authenticated:
-  	form = BookForm(request.POST)
   	if request.method == 'POST':
   		form = BookForm(request.POST)
   		if form.is_valid():
   			form.save()
-  			print(form)
   			form = BookForm()
   			return render(request, 'libraryv2/book_form.html')
   	else:
@@ -301,12 +299,18 @@ def requestbook(request, id):
         if form.is_valid():
           form.save()
           form = requestbookform()
-          return render(request, 'libraryv2/requestbook.html', {'form':form})
+        return redirect('')
       else:
         form = requestbookform()
-        return render(request, 'libraryv2/requestbook.html',{'form':form})
+      return render(request, 'libraryv2/requestbook.html',{'form':form})
   else:
     return HttpResponseRedirect('login')
+
+@login_required(login_url='/accounts/login/')
+@allowed_users(allowed_roles=['Grouplibrarian', 'Groupadmin'])
+def requestedbooks(request):
+  allb= RequestBook.objects.all()
+  return render(request,'libraryv2/allrequestbook.html',{'allb':allb})
 
 
 

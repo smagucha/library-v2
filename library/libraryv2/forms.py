@@ -1,3 +1,4 @@
+from django import forms
 from django.forms import ModelForm
 from .models import Book, BookCatergory,Person, Bookissue, Librarian ,RequestBook
 
@@ -26,7 +27,15 @@ class Librarianform(ModelForm):
 		model = Librarian
 		fields ='__all__'
 
-class requestbookform(ModelForm):
+class requestbookform(forms.ModelForm):
 	class Meta:
 		model = RequestBook
-		fields ='__all__'
+		fields =('yourname','title','catergory')
+
+		widgets={
+			'yourname': forms.TextInput(attrs={'class':'form-group','placeholder':'yourname','id':'yourname','readonly':'True'}),
+			'title': forms.TextInput(attrs={'class':'form-group'}),
+			'catergory': forms.Select(attrs={'class':'form-group'}),
+		}
+
+
