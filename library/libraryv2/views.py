@@ -41,18 +41,17 @@ def allbook(request):
           query =Book.objects.filter(lookup)
     else:
         query= Book.objects.all()
-        paginator=Paginator(query, 2)
-        page_number = request.GET.get('page', 1)
-        page_obj = paginator.get_page(page_number)
-        page_obj = paginator.get_page(1)
-        # try:
-        #   page_obj = paginator.get_page(page_number)
-        # except PageNotAnInteger:
-        #   page_obj = paginator.get_page(1)
-        # except EmptyPage:
-        #   page_obj = paginator.page(paginator.num_pages)
-
-    return render(request, 'libraryv2/list_books.html', {'query': query, 'page_obj':page_obj})
+        paginator = Paginator(query, 10) # 3 posts in each page
+        page = request.GET.get('page')
+        try:
+          posts = paginator.page(page)
+        except PageNotAnInteger:
+          # If page is not an integer deliver the first page
+          posts = paginator.page(1)
+        except EmptyPage:
+          # If page is out of range deliver last page of results
+          posts = paginator.page(paginator.num_pages)
+    return render(request, 'libraryv2/list_books.html', {'posts': posts,'page': page})
   else:
     return HttpResponseRedirect('login')
 
@@ -264,15 +263,17 @@ def Addlibrarian(request):
 def  librarianlist(request):
   if request.user.is_authenticated:
     liblist=Librarian.objects.all()
-    paginator=Paginator(liblist, 1)
-    page_number = request.GET.get('page', 1)
+    paginator=Paginator(liblist, 10)
+    page = request.GET.get('page')
     try:
-      page_obj = paginator.get_page(page_number)
+      posts = paginator.page(page)
     except PageNotAnInteger:
-      page_obj = paginator.get_page(1)
+      # If page is not an integer deliver the first page
+      posts = paginator.page(1)
     except EmptyPage:
-      page_obj = paginator.page(paginator.num_pages)
-    return render(request, 'libraryv2/listlibrarian.html', {'liblist':liblist,'page_obj':page_obj})
+      # If page is out of range deliver last page of results
+      posts = paginator.page(paginator.num_pages)
+    return render(request, 'libraryv2/listlibrarian.html', {'page':page,'posts':posts})
   else:
     return HttpResponseRedirect('login')
 
