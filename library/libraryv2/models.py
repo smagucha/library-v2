@@ -7,16 +7,16 @@ class Person(models.Model):
 	phone =models.PositiveIntegerField()
 	studentid = models.CharField(max_length= 200)
 
-	def __str__(self):
-		return str(self.user)
+	# def __str__(self):
+	# 	return str(self.user)
 
 class Librarian(models.Model):
 	user = models.ForeignKey(User, models.CASCADE,  null = True)
 	phone =models.PositiveIntegerField()
 	librarianid = models.CharField(max_length= 200)
 
-	def __str__(self):
-		return self.user
+	# def __str__(self):
+	# 	return self.user
 
 class BookFormat(models.Model):
 	HARDCOVER='HARDCOVER'
@@ -52,7 +52,8 @@ class Book(models.Model):
 	subject = models.CharField(max_length= 200)
 	publisher = models.CharField(max_length= 200)
 	authors = models.CharField(max_length= 200)
-	nobooks = models.PositiveIntegerField()
+	availablebook = models.PositiveIntegerField()
+	givenout=models.PositiveIntegerField(null= True)
 	catergory =models.ForeignKey(BookCatergory, on_delete= models.CASCADE)
 	formatt = models.ForeignKey(BookFormat, on_delete= models.CASCADE)
 	def __str__(self):

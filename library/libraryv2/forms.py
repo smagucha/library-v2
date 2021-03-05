@@ -5,7 +5,8 @@ from .models import Book, BookCatergory,Person, Bookissue, Librarian ,RequestBoo
 class BookForm(ModelForm):
 	class Meta:
 		model = Book
-		fields ='__all__'
+		exclude = ['givenout']
+
 
 class BookCatergoryForm(ModelForm):
 	class Meta:
@@ -15,7 +16,12 @@ class BookCatergoryForm(ModelForm):
 class StudentForm(ModelForm):
 	class Meta:
 		model = Person
-		fields = '__all__'
+		fields = ('user','phone','studentid')
+		widgets={
+			'user':forms.TextInput(attrs={'class':'form-group','placeholder':'user','id':'user',}), 
+			'phone': forms.TextInput(attrs={'class':'form-group'}),
+			'studentid': forms.TextInput(attrs={'class':'form-group'}),
+		}
 
 class Issueform(ModelForm):
 	class Meta:

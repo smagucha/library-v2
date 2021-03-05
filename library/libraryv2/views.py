@@ -9,7 +9,10 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from .decorators import allowed_users
 from django.contrib.auth.models import User, Group
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+
 
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
@@ -38,7 +41,18 @@ def allbook(request):
           query =Book.objects.filter(lookup)
     else:
         query= Book.objects.all()
-    return render(request, 'libraryv2/list_books.html', {'query': query})
+        paginator=Paginator(query, 2)
+        page_number = request.GET.get('page', 1)
+        page_obj = paginator.get_page(page_number)
+        page_obj = paginator.get_page(1)
+        # try:
+        #   page_obj = paginator.get_page(page_number)
+        # except PageNotAnInteger:
+        #   page_obj = paginator.get_page(1)
+        # except EmptyPage:
+        #   page_obj = paginator.page(paginator.num_pages)
+
+    return render(request, 'libraryv2/list_books.html', {'query': query, 'page_obj':page_obj})
   else:
     return HttpResponseRedirect('login')
 
@@ -104,10 +118,10 @@ def addstudent(request):
       if form.is_valid():
         form.save()
         form = StudentForm()
-        return render(request,'libraryv2/addstudent.html',{'form': form})
+      return render(request,'libraryv2/addstudent.html',{'form': form})
     else:
       form = StudentForm()
-      return render(request,'libraryv2/addstudent.html',{'form': form})
+    return render(request,'libraryv2/addstudent.html',{'form': form})
   else:
     return HttpResponseRedirect('login')
 
@@ -131,7 +145,6 @@ def liststudent(request):
 def updatestudent(request, id):
   if request.user.is_authenticated:
     student = Person.objects.get(id=id)
-    print(request.user.id, student.id)
     if request.user.id != student.user.id:
       return HttpResponse('cannot edit another student details')
     else:
@@ -251,7 +264,15 @@ def Addlibrarian(request):
 def  librarianlist(request):
   if request.user.is_authenticated:
     liblist=Librarian.objects.all()
-    return render(request, 'libraryv2/listlibrarian.html', {'liblist':liblist})
+    paginator=Paginator(liblist, 1)
+    page_number = request.GET.get('page', 1)
+    try:
+      page_obj = paginator.get_page(page_number)
+    except PageNotAnInteger:
+      page_obj = paginator.get_page(1)
+    except EmptyPage:
+      page_obj = paginator.page(paginator.num_pages)
+    return render(request, 'libraryv2/listlibrarian.html', {'liblist':liblist,'page_obj':page_obj})
   else:
     return HttpResponseRedirect('login')
 
@@ -294,13 +315,12 @@ def requestbook(request, id):
     if b >= 3:
       return render(request, 'libraryv2/norequestbook.html')
     else:
-      form = requestbookform(request.POST)
       if request.method =='POST':
         form = requestbookform(request.POST)
         if form.is_valid():
           form.save()
           form = requestbookform()
-        return redirect('')
+          return redirect('')
       else:
         form = requestbookform()
       return render(request, 'libraryv2/requestbook.html',{'form':form})
@@ -317,8 +337,6 @@ def requestedbooks(request):
 def Bookcatergory(request):
   bookcate=BookCatergory.objects.all()
   return render(request, 'libraryv2/bookcatergory.html',{'bookcate':bookcate})
-
-
 
 
 
