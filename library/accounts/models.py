@@ -1,5 +1,6 @@
 # accounts.models.py
 from django.db import models
+from django.contrib.auth.models import PermissionsMixin
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser
 )
@@ -45,7 +46,7 @@ class UserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-class User(AbstractBaseUser):
+class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(
         verbose_name='email address',
         max_length=255,
