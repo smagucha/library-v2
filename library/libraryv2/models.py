@@ -1,10 +1,13 @@
 from django.conf import settings
 from django.contrib.auth import get_user_model as user_model
 from django.db import models
+from django.conf import settings
+
 User = user_model()
 
 class Person(models.Model):
-	user = models.ForeignKey(User, on_delete=models.CASCADE, null = True)
+	#user = models.ForeignKey(User, on_delete=models.CASCADE, null = True)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null = True)
 	phone =models.PositiveIntegerField()
 	studentid = models.CharField(max_length= 200)
 
@@ -12,7 +15,7 @@ class Person(models.Model):
 	# 	return str(self.user)
 
 class Librarian(models.Model):
-	user = models.ForeignKey(User, models.CASCADE,  null = True)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE,  null = True)
 	phone =models.PositiveIntegerField()
 	librarianid = models.CharField(max_length= 200)
 
