@@ -1,0 +1,14 @@
+[
+    {
+        "id": 1,
+        "name": "Grouplibrarian"
+    },
+    {
+        "id": 2,
+        "name": "Groupadmin"
+    },
+    {
+        "id": 3,
+        "name": "studentgroup"
+    }
+]
