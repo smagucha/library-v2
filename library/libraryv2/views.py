@@ -17,127 +17,106 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 @login_required(login_url='/accounts/login/')
 # @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def bookform(request):
-  if request.user.is_authenticated:
-  	if request.method == 'POST':
-  		form = BookForm(request.POST)
-  		if form.is_valid():
-  			form.save()
-  			form = BookForm()
-  			return redirect('allbooks')
-  	else:
-  		form = BookForm()
-  	return render(request, 'libraryv2/book_form.html', {'form': form})
-  else:
-    return HttpResponseRedirect('login')
+	if request.method == 'POST':
+		form = BookForm(request.POST)
+		if form.is_valid():
+			form.save()
+			form = BookForm()
+			return redirect('allbooks')
+	else:
+		form = BookForm()
+	return render(request, 'libraryv2/book_form.html', {'form': form})
+
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def allbook(request):
-  if request.user.is_authenticated:
-    if 'q' in request.GET:
-          q=request.GET['q']
-          lookup=(Q(title__icontains=q)|Q(subject__icontains=q)|Q(publisher__icontains=q)
-            |Q(authors__icontains=q)|Q(nobooks__icontains=q))
-          query =Book.objects.filter(lookup)
-    else:
-        query= Book.objects.all()
-        paginator = Paginator(query, 10) # 3 posts in each page
-        page = request.GET.get('page')
-        try:
-          posts = paginator.page(page)
-        except PageNotAnInteger:
-          # If page is not an integer deliver the first page
-          posts = paginator.page(1)
-        except EmptyPage:
-          # If page is out of range deliver last page of results
-          posts = paginator.page(paginator.num_pages)
-    return render(request, 'libraryv2/list_books.html', {'posts': posts,'page': page})
+  if 'q' in request.GET:
+        q=request.GET['q']
+        lookup=(Q(title__icontains=q)|Q(subject__icontains=q)|Q(publisher__icontains=q)
+          |Q(authors__icontains=q)|Q(nobooks__icontains=q))
+        query =Book.objects.filter(lookup)
   else:
-    return HttpResponseRedirect('login')
+      query= Book.objects.all()
+      paginator = Paginator(query, 10) # 3 posts in each page
+      page = request.GET.get('page')
+      try:
+        posts = paginator.page(page)
+      except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        posts = paginator.page(1)
+      except EmptyPage:
+        # If page is out of range deliver last page of results
+        posts = paginator.page(paginator.num_pages)
+  return render(request, 'libraryv2/list_books.html', {'posts': posts,'page': page})
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin'])
 def DeleteBook(request, id):
-  if request.user.is_authenticated:
-    delobj =Book.objects.get(id=id)
-    if request.method == 'POST':
-        delobj.delete()
-        return redirect('allbooks')
-    context = {
-        'delobj': delobj
-    }
-    return render(request, 'libraryv2/deletebook.html', context)
-  else:
-    return HttpResponseRedirect('login')
+  delobj =Book.objects.get(id=id)
+  if request.method == 'POST':
+      delobj.delete()
+      return redirect('allbooks')
+  context = {
+      'delobj': delobj
+  }
+  return render(request, 'libraryv2/deletebook.html', context)
+  
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Updatebook(request, id):
-  if request.user.is_authenticated:
-  	obj = Book.objects.get(id=id)
-  	form = BookForm(request.POST or None, instance= obj)
-  	if form.is_valid():
-  		form.save()
-  		form= BookForm()
-  		return redirect('allbooks')
-  	return render(request, 'libraryv2/updatebook.html', {'obj':obj,'form': form})
-  else:
-    return HttpResponseRedirect('login')
+	obj = Book.objects.get(id=id)
+	form = BookForm(request.POST or None, instance= obj)
+	if form.is_valid():
+		form.save()
+		form= BookForm()
+		return redirect('allbooks')
+	return render(request, 'libraryv2/updatebook.html', {'obj':obj,'form': form})
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['studentgroup','Groupadmin','Grouplibrarian'])
 def home(request):
-  if request.user.is_authenticated:
-    return render(request, 'libraryv2/home.html')
-  else:
-    return HttpResponseRedirect('login')
+  return render(request, 'libraryv2/home.html')
+ 
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Addbookcatergory(request):
-  if request.user.is_authenticated:
-    if request.method == 'POST':
-      form = BookCatergoryForm(request.POST)
-      if form.is_valid():
-        form.save()
-        form = BookCatergoryForm()
-        return render(request, 'libraryv2/Addbookcatergory.html')
-    else:
+  if request.method == 'POST':
+    form = BookCatergoryForm(request.POST)
+    if form.is_valid():
+      form.save()
       form = BookCatergoryForm()
-    return render(request, 'libraryv2/Addbookcatergory.html', {'form': form})
+      return render(request, 'libraryv2/Addbookcatergory.html')
   else:
-    return HttpResponseRedirect('login')
+    form = BookCatergoryForm()
+  return render(request, 'libraryv2/Addbookcatergory.html', {'form': form})
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin'])
 def addstudent(request):
-  if request.user.is_authenticated:
-    if request.method == 'POST':
-      form = StudentForm(request.POST)
-      if form.is_valid():
-        form.save()
-        form = StudentForm()
-      return render(request,'libraryv2/addstudent.html',{'form': form})
-    else:
+  if request.method == 'POST':
+    form = StudentForm(request.POST)
+    if form.is_valid():
+      form.save()
       form = StudentForm()
     return render(request,'libraryv2/addstudent.html',{'form': form})
   else:
-    return HttpResponseRedirect('login')
+    form = StudentForm()
+  return render(request,'libraryv2/addstudent.html',{'form': form})
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def liststudent(request):
-  if request.user.is_authenticated:
-    if 'q' in request.GET:
-          q=request.GET['q']
-          lookup=(Q(name__icontains=q)|Q(email__icontains=q)|Q(phone__icontains=q)
-            |Q(studentid__icontains=q))
-          student =Person.objects.filter(lookup)
-    else:
-        student= Person.objects.all()
-    return render(request, 'libraryv2/liststudent.html', {'student': student})
+  if 'q' in request.GET:
+        q=request.GET['q']
+        lookup=(Q(name__icontains=q)|Q(email__icontains=q)|Q(phone__icontains=q)
+          |Q(studentid__icontains=q))
+        student =Person.objects.filter(lookup)
   else:
-    return HttpResponseRedirect('login')
+      student= Person.objects.all()
+  return render(request, 'libraryv2/liststudent.html', {'student': student})
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian', 'studentgroup'])
@@ -174,159 +153,139 @@ def deletestudent(request, id):
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuebook(request):
-  if request.user.is_authenticated:
-    if request.method =='POST':
-      form= Issueform(request.POST)
-      if form.is_valid():
-        form.save()
-        form =Issueform()
-        return redirect('Issuedbooks')
-    else:
-      form = Issueform()
-    return render(request, 'libraryv2/issuebook.html',{'form': form})
+  if request.method =='POST':
+    form= Issueform(request.POST)
+    if form.is_valid():
+      form.save()
+      form =Issueform()
+      return redirect('Issuedbooks')
   else:
-    return HttpResponseRedirect('login')
+    form = Issueform()
+  return render(request, 'libraryv2/issuebook.html',{'form': form})
+
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuebookdelete(request, id):
-  if request.user.is_authenticated:
-    delbookissue = Bookissue.objects.get(id = id)
-    if request.method=='POST':
-      delbookissue.delete()
-      return redirect('Issuedbooks')
-    context = {
-      'delbookissue': delbookissue
-    }
-    return render(request, 'libraryv2/deletebookissued.html', context)
-  else:
-    return HttpResponseRedirect('login')
+  delbookissue = Bookissue.objects.get(id = id)
+  if request.method=='POST':
+    delbookissue.delete()
+    return redirect('Issuedbooks')
+  context = {
+    'delbookissue': delbookissue
+  }
+  return render(request, 'libraryv2/deletebookissued.html', context)
+
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuebookupdate(request, id):
-  if request.user.is_authenticated:
-    updatebookissue=Bookissue.objects.get(id=id)
-    form = Issueform(request.POST or None, instance= updatebookissue)
-    if form.is_valid():
-      form.save()
-    return render(request,'libraryv2/Issuebookupdate.html',{'form':form})
-  else:
-    return HttpResponseRedirect('login')
+  updatebookissue=Bookissue.objects.get(id=id)
+  form = Issueform(request.POST or None, instance= updatebookissue)
+  if form.is_valid():
+    form.save()
+  return render(request,'libraryv2/Issuebookupdate.html',{'form':form})
+
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuedbooks(request):
-  if request.user.is_authenticated:
     query =Bookissue.objects.all()
     return render(request, 'libraryv2/issuedbooks.html', {'query': query})
-  else:
-    return HttpResponseRedirect('login')
+ 
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','studentgroup'])
 def studentdetail(request, id):
-  if request.user.is_authenticated:
-    student = Person.objects.filter(id = id) 
-    x= Person.objects.get(id=id)
-    y=x.bookissue_set.all()
-    book=x.requestbook_set.all()
-    b =x.bookissue_set.count()
-    context ={
-      'student':student,
-      'y':y,
-      'b': b,
-      'book':book
-    }
-    return render(request, 'libraryv2/studentdetail.html',context)
-  else:
-    return HttpResponseRedirect('login')
+  student = Person.objects.filter(id = id) 
+  x= Person.objects.get(id=id)
+  y=x.bookissue_set.all()
+  book=x.requestbook_set.all()
+  b =x.bookissue_set.count()
+  context ={
+    'student':student,
+    'y':y,
+    'b': b,
+    'book':book
+  }
+  return render(request, 'libraryv2/studentdetail.html',context)
+
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin'])
 def Addlibrarian(request):
-  if request.user.is_authenticated:
-    if request.method=='POST':
-      form = Librarianform(request.POST)
-      if form.is_valid():
-        form.save()
-        form=Librarianform()
-        return redirect('librarianlist')
-    else:
-      form = Librarianform()
-      return render(request, 'libraryv2/addlibrarian.html', {'form': form})
+  if request.method=='POST':
+    form = Librarianform(request.POST)
+    if form.is_valid():
+      form.save()
+      form=Librarianform()
+      return redirect('librarianlist')
   else:
-    return HttpResponseRedirect('login')
+    form = Librarianform()
+    return render(request, 'libraryv2/addlibrarian.html', {'form': form})
+
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def  librarianlist(request):
-  if request.user.is_authenticated:
-    liblist=Librarian.objects.all()
-    paginator=Paginator(liblist, 10)
-    page = request.GET.get('page')
-    try:
-      posts = paginator.page(page)
-    except PageNotAnInteger:
-      # If page is not an integer deliver the first page
-      posts = paginator.page(1)
-    except EmptyPage:
-      # If page is out of range deliver last page of results
-      posts = paginator.page(paginator.num_pages)
-    return render(request, 'libraryv2/listlibrarian.html', {'page':page,'posts':posts})
-  else:
-    return HttpResponseRedirect('login')
+  liblist=Librarian.objects.all()
+  paginator=Paginator(liblist, 10)
+  page = request.GET.get('page')
+  try:
+    posts = paginator.page(page)
+  except PageNotAnInteger:
+    # If page is not an integer deliver the first page
+    posts = paginator.page(1)
+  except EmptyPage:
+    # If page is out of range deliver last page of results
+    posts = paginator.page(paginator.num_pages)
+  return render(request, 'libraryv2/listlibrarian.html', {'page':page,'posts':posts})
+
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin'])
 def updatelibrarian(request, id):
-  if request.user.is_authenticated:
-    liblistid = Librarian.objects.get(id = id)
-    form = Librarianform(request.POST or None, instance=liblistid)
-    if form.is_valid():
-      form.save()
-      form = Librarianform()
-      return redirect('librarianlist')
-    context={'liblistid':liblistid,'form':form , }
-    return render(request, 'libraryv2/updatelibrarian.html', context)
-  else:
-    return HttpResponseRedirect('login') 
+  liblistid = Librarian.objects.get(id = id)
+  form = Librarianform(request.POST or None, instance=liblistid)
+  if form.is_valid():
+    form.save()
+    form = Librarianform()
+    return redirect('librarianlist')
+  context={'liblistid':liblistid,'form':form , }
+  return render(request, 'libraryv2/updatelibrarian.html', context)
+
  
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin'])
 def deletelibrarian(request, id):
-  if request.user.is_authenticated:
-    liblistid = Librarian.objects.get(id = id)
-    if request.method=='POST':
-      liblistid.delete()
-      return redirect('librarianlist')
-    context = {
-      'liblistid': liblistid
-    }
-    return render(request, 'libraryv2/deletelibrarian.html', context)
-  else:
-    return HttpResponseRedirect('login')
+  liblistid = Librarian.objects.get(id = id)
+  if request.method=='POST':
+    liblistid.delete()
+    return redirect('librarianlist')
+  context = {
+    'liblistid': liblistid
+  }
+  return render(request, 'libraryv2/deletelibrarian.html', context)
+  
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['studentgroup', 'Groupadmin'])
 def requestbook(request, id):
-  if request.user.is_authenticated:
-    x= Person.objects.get(id=id)
-    b =x.bookissue_set.count()
-    if b >= 3:
-      return render(request, 'libraryv2/norequestbook.html')
-    else:
-      if request.method =='POST':
-        form = requestbookform(request.POST)
-        if form.is_valid():
-          form.save()
-          form = requestbookform()
-          return redirect('')
-      else:
-        form = requestbookform()
-      return render(request, 'libraryv2/requestbook.html',{'form':form})
+  x= Person.objects.get(id=id)
+  b =x.bookissue_set.count()
+  if b >= 3:
+    return render(request, 'libraryv2/norequestbook.html')
   else:
-    return HttpResponseRedirect('login')
+    if request.method =='POST':
+      form = requestbookform(request.POST)
+      if form.is_valid():
+        form.save()
+        form = requestbookform()
+        return redirect('')
+    else:
+      form = requestbookform()
+    return render(request, 'libraryv2/requestbook.html',{'form':form})
+
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Grouplibrarian', 'Groupadmin'])
