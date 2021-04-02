@@ -23,6 +23,7 @@ urlpatterns=[
 	path('Issuebookupdate/<int:id>/update', views.Issuebookupdate, name='issuebookupdate' ),
 	path('requestedbooks', views.requestedbooks, name='requestedbooks'),
 	path('Bookcatergory', views.Bookcatergory, name='Bookcatergory'),
+	path('bookdetails/<int:id>', views.bookdetails, name='bookdetails')
 	
 	
 ]

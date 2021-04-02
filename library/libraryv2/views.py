@@ -299,6 +299,11 @@ def Bookcatergory(request):
   return render(request, 'libraryv2/bookcatergory.html',{'bookcate':bookcate})
 
 
+def  bookdetails(request, id):
+  details= Book.objects.get(id =id)
+  return render(request, 'libraryv2/details.html',{'details': details})
+
+
 
   
 
