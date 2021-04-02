@@ -172,8 +172,13 @@ def Issuebook(request, id):
 def Issuebookdelete(request, id):
   delbookissue = Bookissue.objects.get(id = id)
   if request.method=='POST':
+    delbookissue.book.availablebook += 1
+    delbookissue.book.givenout -= 1
+    delbookissue.book.save()
     delbookissue.delete()
+    print(delbookissue.book.availablebook)
     return redirect('Issuedbooks')
+  
   context = {
     'delbookissue': delbookissue
   }
