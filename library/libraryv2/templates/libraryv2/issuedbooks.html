@@ -2,7 +2,6 @@
 {% load static %}
 {%block content%}
 <link href="{% static 'css/table.css'%}" rel="stylesheet">
-<a href="Issuebook" class="button">issue book</a><br>
 <br>
 <table >
     <thead>
@@ -25,7 +24,6 @@
             <td> {{query.book}}</td>
             <td> {{query.given_date}}</td>
             <td> {{query.due_date}}</td>
-           <!--  <a href="{% url '' %}" class="active">Home</a> -->
          
             <td><a href="{% url 'issuebookupdate' query.id %}" class="updatelink">update</a></td>
             <td><a href="{% url 'issuebookdelete' query.id %}" class="deletelink">delete</a></td>

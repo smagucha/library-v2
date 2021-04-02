@@ -40,10 +40,6 @@ class requestbookform(forms.ModelForm):
 		model = RequestBook
 		fields =('yourname','title','catergory')
 
-		widgets={
-			'yourname': forms.TextInput(attrs={'class':'form-group','placeholder':'yourname','id':'yourname','readonly':'True'}),
-			'title': forms.TextInput(attrs={'class':'form-group'}),
-			'catergory': forms.Select(attrs={'class':'form-group'}),
-		}
+		
 
 

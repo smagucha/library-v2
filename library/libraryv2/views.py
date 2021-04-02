@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Book, BookCatergory, BookFormat, Person, Bookissue, Librarian, RequestBook
+from .models import Book, BookCatergory,Person, Bookissue, Librarian, RequestBook
 from .forms import BookForm, BookCatergoryForm, StudentForm,Issueform, Librarianform,requestbookform
 from django.shortcuts import get_object_or_404
 from django.db.models import Q
@@ -163,7 +163,6 @@ def Issuebook(request):
     form = Issueform()
   return render(request, 'libraryv2/issuebook.html',{'form': form})
 
-
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuebookdelete(request, id):
@@ -191,6 +190,7 @@ def Issuebookupdate(request, id):
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuedbooks(request):
     query =Bookissue.objects.all()
+
     return render(request, 'libraryv2/issuedbooks.html', {'query': query})
  
 

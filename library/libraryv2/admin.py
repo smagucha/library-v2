@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 from .models import (
- 	Book,BookFormat, Librarian,Person,BookCatergory,Bookissue, RequestBook
+ 	Book, Librarian,Person,BookCatergory,Bookissue, RequestBook
  	)
 
 # @admin.register(Person)
@@ -15,7 +15,7 @@ admin.site.register(RequestBook)
 @admin.register(Book)
 class BookAdmin(admin.ModelAdmin):
     search_fields = ['title', 'subject', 'publisher','authors',]
-    list_display = ['title', 'subject', 'publisher','authors']
+    list_display = ['title', 'subject', 'publisher','authors','availablebook','givenout']
     #list_filter = []
 
 @admin.register(Bookissue)
@@ -37,5 +37,5 @@ class BookCatergoryAdmin(admin.ModelAdmin):
     search_fields = ['name', ]
     list_display = ['name', ]
 
-admin.site.register(BookFormat)
+
    
