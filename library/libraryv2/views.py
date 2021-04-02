@@ -152,10 +152,14 @@ def deletestudent(request, id):
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
-def Issuebook(request):
+def Issuebook(request, id):
+  book_id = Book.objects.get(id=id)
   if request.method =='POST':
     form= Issueform(request.POST)
     if form.is_valid():
+      book_id.availablebook -= 1
+      book_id.givenout += 1
+      book_id.save()
       form.save()
       form =Issueform()
       return redirect('Issuedbooks')
@@ -299,9 +303,10 @@ def Bookcatergory(request):
   return render(request, 'libraryv2/bookcatergory.html',{'bookcate':bookcate})
 
 
-def  bookdetails(request, id):
-  details= Book.objects.get(id =id)
-  return render(request, 'libraryv2/details.html',{'details': details})
+
+
+
+
 
 
 

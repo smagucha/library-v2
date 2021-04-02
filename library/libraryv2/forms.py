@@ -18,12 +18,6 @@ class StudentForm(ModelForm):
 	class Meta:
 		model = Person
 		fields = ('user','phone','studentid')
-		# widgets={
-		# 	'user':forms.TextInput(attrs={'class':'form-group','placeholder':'user','id':'user', 'disable':True}), 
-		# 	'phone': forms.TextInput(attrs={'class':'form-group'}),
-		# 	'studentid': forms.TextInput(attrs={'class':'form-group'}),
-		# }
-		#forms.TextField(widget=widgets.Select)
 
 class Issueform(ModelForm):
 	class Meta:

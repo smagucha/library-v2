@@ -11,7 +11,7 @@ urlpatterns=[
 	path('liststudent', views.liststudent, name='liststudent'),
 	path('updatestudent/<int:id>/update', views.updatestudent, name='updatestudent' ),
 	path('deletestudent/<int:id>/delete', views.deletestudent, name='deletestudent'),
-	path('Issuebook/', views.Issuebook, name= 'Issuebook'),
+	path('Issuebook/<int:id>', views.Issuebook, name= 'Issuebook'),
 	path('Issuedbooks', views.Issuedbooks, name='Issuedbooks'),
 	path('studentdetail/<int:id>/', views.studentdetail, name='studentdetail'),
 	path('Addlibrarian', views.Addlibrarian, name='Addlibrarian'),
@@ -23,7 +23,7 @@ urlpatterns=[
 	path('Issuebookupdate/<int:id>/update', views.Issuebookupdate, name='issuebookupdate' ),
 	path('requestedbooks', views.requestedbooks, name='requestedbooks'),
 	path('Bookcatergory', views.Bookcatergory, name='Bookcatergory'),
-	path('bookdetails/<int:id>', views.bookdetails, name='bookdetails')
+	
 	
 	
 ]

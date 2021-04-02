@@ -55,7 +55,7 @@ class Book(models.Model):
 	publisher = models.CharField(max_length= 200)
 	authors = models.CharField(max_length= 200)
 	availablebook = models.PositiveIntegerField()
-	givenout=models.PositiveIntegerField(null= True)
+	givenout=models.PositiveIntegerField(default=0, null= True)
 	catergory =models.ForeignKey(BookCatergory, on_delete= models.CASCADE)
 	Bookformat = models.CharField(
 		max_length=9,
