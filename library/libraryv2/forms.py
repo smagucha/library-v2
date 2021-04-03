@@ -7,8 +7,6 @@ class BookForm(ModelForm):
 		model = Book
 		exclude = ['givenout']
 	
-
-
 class BookCatergoryForm(ModelForm):
 	class Meta:
 		model= BookCatergory
@@ -17,7 +15,7 @@ class BookCatergoryForm(ModelForm):
 class StudentForm(ModelForm):
 	class Meta:
 		model = Person
-		fields = ('user','phone','studentid')
+		fields = '__all__'
 
 class Issueform(ModelForm):
 	class Meta:
@@ -32,8 +30,11 @@ class Librarianform(ModelForm):
 class requestbookform(forms.ModelForm):
 	class Meta:
 		model = RequestBook
-		fields =('yourname','title','catergory')
+		fields ='__all__'
 
 		
-
+class BookIssueform(forms.ModelForm):
+	class Meta:
+		model= Bookissue
+		fields ='__all__'
 

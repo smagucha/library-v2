@@ -32,23 +32,21 @@ def bookform(request):
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def allbook(request):
   if 'q' in request.GET:
-        q=request.GET['q']
-        lookup=(Q(title__icontains=q)|Q(subject__icontains=q)|Q(publisher__icontains=q)
-          |Q(authors__icontains=q)|Q(nobooks__icontains=q))
-        query =Book.objects.filter(lookup)
+    q=request.GET['q']
+    lookup=(Q(title__icontains=q)|Q(subject__icontains=q)|Q(publisher__icontains=q)|Q(authors__icontains=q))
+    query =Book.objects.filter(lookup)
   else:
-      query= Book.objects.all()
-      paginator = Paginator(query, 10) # 3 posts in each page
-      page = request.GET.get('page')
-      try:
-        posts = paginator.page(page)
-      except PageNotAnInteger:
-        # If page is not an integer deliver the first page
-        posts = paginator.page(1)
-      except EmptyPage:
-        # If page is out of range deliver last page of results
-        posts = paginator.page(paginator.num_pages)
-  return render(request, 'libraryv2/list_books.html', {'posts': posts,'page': page})
+    query= Book.objects.all()
+    paginator = Paginator(query, 10) # 3 posts in each page
+    page = request.GET.get('page')
+    try:
+      posts = paginator.page(page)
+    except PageNotAnInteger:
+      posts = paginator.page(1)
+    except EmptyPage:
+      posts = paginator.page(paginator.num_pages)
+  context ={'posts': posts,'page': page}
+  return render(request, 'libraryv2/list_books.html', context)
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin'])
@@ -110,9 +108,8 @@ def addstudent(request):
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def liststudent(request):
   if 'q' in request.GET:
-        q=request.GET['q']
-        lookup=(Q(name__icontains=q)|Q(email__icontains=q)|Q(phone__icontains=q)
-          |Q(studentid__icontains=q))
+        q=request.GET['q']   
+        lookup=(Q(user__email__icontains=q)|Q(phone__icontains=q)|Q(studentid__icontains=q))
         student =Person.objects.filter(lookup)
   else:
       student= Person.objects.all()
@@ -121,19 +118,17 @@ def liststudent(request):
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian', 'studentgroup'])
 def updatestudent(request, id):
-  if request.user.is_authenticated:
-    student = Person.objects.get(id=id)
-    if request.user.id != student.user.id:
-      return HttpResponse('cannot edit another student details')
-    else:
-      form = StudentForm(request.POST or None, instance= student)
-      if form.is_valid():
-        form.save()
-        form= StudentForm()
-        return redirect('liststudent')
-      return render(request, 'libraryv2/updatestudent.html', {'student':student,'form': form})
+  student = Person.objects.get(id=id)
+  if request.user.id != student.user.id:
+    return HttpResponse('cannot edit another student details')
   else:
-    return HttpResponseRedirect('login')
+    form = StudentForm(request.POST or None, instance= student)
+    if form.is_valid():
+      form.save()
+      form= StudentForm()
+      return redirect('liststudent')
+    return render(request, 'libraryv2/updatestudent.html', {'student':student,'form': form})
+  
 
 @login_required(login_url='/accounts/login/')
 #@allowed_users(allowed_roles=['Groupadmin'])
