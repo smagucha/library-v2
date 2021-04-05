@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.db.models import Count
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
-#from .decorators import allowed_users
+from .decorators import allowed_users
 from django.contrib.auth.models import User, Group
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -15,7 +15,7 @@ from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 @login_required(login_url='/accounts/login/')
-# @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def bookform(request):
 	if request.method == 'POST':
 		form = BookForm(request.POST)
@@ -29,7 +29,7 @@ def bookform(request):
 
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def allbook(request):
   if 'q' in request.GET:
     q=request.GET['q']
@@ -62,7 +62,7 @@ def DeleteBook(request, id):
   
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Updatebook(request, id):
 	obj = Book.objects.get(id=id)
 	form = BookForm(request.POST or None, instance= obj)
@@ -73,13 +73,13 @@ def Updatebook(request, id):
 	return render(request, 'libraryv2/updatebook.html', {'obj':obj,'form': form})
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['studentgroup','Groupadmin','Grouplibrarian'])
+@allowed_users(allowed_roles=['studentgroup','Groupadmin','Grouplibrarian'])
 def home(request):
   return render(request, 'libraryv2/home.html')
  
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Addbookcatergory(request):
   if request.method == 'POST':
     form = BookCatergoryForm(request.POST)
@@ -92,7 +92,7 @@ def Addbookcatergory(request):
   return render(request, 'libraryv2/Addbookcatergory.html', {'form': form})
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin'])
+@allowed_users(allowed_roles=['Groupadmin'])
 def addstudent(request):
   if request.method == 'POST':
     form = StudentForm(request.POST)
@@ -105,7 +105,7 @@ def addstudent(request):
   return render(request,'libraryv2/addstudent.html',{'form': form})
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def liststudent(request):
   if 'q' in request.GET:
         q=request.GET['q']   
@@ -116,7 +116,7 @@ def liststudent(request):
   return render(request, 'libraryv2/liststudent.html', {'student': student})
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian', 'studentgroup'])
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian', 'studentgroup'])
 def updatestudent(request, id):
   student = Person.objects.get(id=id)
   if request.user.id != student.user.id:
@@ -131,7 +131,7 @@ def updatestudent(request, id):
   
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin'])
+@allowed_users(allowed_roles=['Groupadmin'])
 def deletestudent(request, id):
   if request.user.is_authenticated:
     delstudent= Person.objects.get(id =id)
@@ -146,7 +146,7 @@ def deletestudent(request, id):
     return HttpResponseRedirect('login')
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuebook(request, id):
   book_id = Book.objects.get(id=id)
   if request.method =='POST':
@@ -163,7 +163,7 @@ def Issuebook(request, id):
   return render(request, 'libraryv2/issuebook.html',{'form': form})
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuebookdelete(request, id):
   delbookissue = Bookissue.objects.get(id = id)
   if request.method=='POST':
@@ -181,7 +181,7 @@ def Issuebookdelete(request, id):
 
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuebookupdate(request, id):
   updatebookissue=Bookissue.objects.get(id=id)
   form = Issueform(request.POST or None, instance= updatebookissue)
@@ -191,7 +191,7 @@ def Issuebookupdate(request, id):
 
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuedbooks(request):
     query =Bookissue.objects.all()
 
@@ -199,7 +199,7 @@ def Issuedbooks(request):
  
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin','studentgroup'])
+@allowed_users(allowed_roles=['Groupadmin','studentgroup'])
 def studentdetail(request, id):
   student = Person.objects.filter(id = id) 
   x= Person.objects.get(id=id)
@@ -216,7 +216,7 @@ def studentdetail(request, id):
 
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin'])
+@allowed_users(allowed_roles=['Groupadmin'])
 def Addlibrarian(request):
   if request.method=='POST':
     form = Librarianform(request.POST)
@@ -230,7 +230,7 @@ def Addlibrarian(request):
 
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
+@allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def  librarianlist(request):
   liblist=Librarian.objects.all()
   paginator=Paginator(liblist, 10)
@@ -247,7 +247,7 @@ def  librarianlist(request):
 
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin'])
+@allowed_users(allowed_roles=['Groupadmin'])
 def updatelibrarian(request, id):
   liblistid = Librarian.objects.get(id = id)
   form = Librarianform(request.POST or None, instance=liblistid)
@@ -260,7 +260,7 @@ def updatelibrarian(request, id):
 
  
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin'])
+@allowed_users(allowed_roles=['Groupadmin'])
 def deletelibrarian(request, id):
   liblistid = Librarian.objects.get(id = id)
   if request.method=='POST':
@@ -273,7 +273,7 @@ def deletelibrarian(request, id):
   
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['studentgroup', 'Groupadmin'])
+@allowed_users(allowed_roles=['studentgroup', 'Groupadmin'])
 def requestbook(request, id):
   x= Person.objects.get(id=id)
   b =x.bookissue_set.count()
@@ -292,7 +292,7 @@ def requestbook(request, id):
 
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Grouplibrarian', 'Groupadmin'])
+@allowed_users(allowed_roles=['Grouplibrarian', 'Groupadmin'])
 def requestedbooks(request):
   allb= RequestBook.objects.all()
   return render(request,'libraryv2/allrequestbook.html',{'allb':allb})

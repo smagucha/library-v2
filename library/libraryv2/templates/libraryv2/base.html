@@ -35,7 +35,7 @@
     <h2>logged in user</h2>
    {% if user.is_authenticated %}
    <img src="{% static 'img/user.png' %}" alt="My image" width="100" height="100"><br>
-   Current user {{ user.username }}
+   Current user <b>{{ User.username }}</b>
     {% else %}
     
     {%endif%}

@@ -141,4 +141,11 @@ body {
   }
 }
 
-
+.div1{
+  height: 20vh;
+  width: 20%;
+  background-color: #7FFFD4;
+  margin:5px;
+  float:left;
+  border-radius: 5px;
+}
