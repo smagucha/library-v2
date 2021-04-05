@@ -1,5 +1,6 @@
-from django.shortcuts import render
-from .forms import RegisterForm
+from django.shortcuts import render, redirect
+from .forms import RegisterForm, CustomUserUpdateForm
+from .models import User
 def register(request):
     if request.method == 'POST':
         user_form = RegisterForm(request.POST)
@@ -15,3 +16,16 @@ def register(request):
         user_form = RegisterForm()
     return render(request, 'accounts/register.html', {'user_form': user_form})
 
+def updateprofile(request):
+
+    if request.method =='POST':
+        form= CustomUserUpdateForm(request.POST, instance= request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('')
+    else:
+        form = CustomUserUpdateForm(instance = request.user)
+        if form.is_valid():
+            form.save()
+            return redirect('')
+    return render(request, 'accounts/edit_profile.html', {'form': form,})
