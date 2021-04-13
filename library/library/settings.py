@@ -32,6 +32,7 @@ INSTALLED_APPS = [
     'accounts',
     #third applications
     'crispy_forms',
+ 
 
 ]
 

@@ -302,6 +302,9 @@ def Bookcatergory(request):
   bookcate=BookCatergory.objects.all()
   return render(request, 'libraryv2/bookcatergory.html',{'bookcate':bookcate})
 
+def dashboard(request):
+  return render(request, 'libraryv2/dashboard.html')
+
 
 
 
