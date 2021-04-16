@@ -11,7 +11,8 @@ from .decorators import allowed_users
 from django.contrib.auth.models import User, Group
 from django.http import HttpResponse, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-
+from django.contrib.auth import get_user_model
+User = get_user_model()
 
 
 @login_required(login_url='/accounts/login/')
@@ -198,6 +199,11 @@ def Issuedbooks(request):
     return render(request, 'libraryv2/issuedbooks.html', {'query': query})
  
 
+
+def sammy(request,email):
+  u = User.objects.get(email=email)
+  return render(request, 'libraryv2/sammy.html')
+
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','studentgroup'])
 def studentdetail(request, id):
@@ -304,6 +310,8 @@ def Bookcatergory(request):
 
 def dashboard(request):
   return render(request, 'libraryv2/dashboard.html')
+
+
 
 
 
