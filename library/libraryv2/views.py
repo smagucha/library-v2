@@ -200,26 +200,27 @@ def Issuedbooks(request):
  
 
 
-def sammy(request,email):
-  u = User.objects.get(email=email)
+def sammy(request, email):
+  u = User.objects.get(email=request.user)
   return render(request, 'libraryv2/sammy.html')
 
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','studentgroup'])
-def studentdetail(request, id):
-  student = Person.objects.filter(id = id) 
-  x= Person.objects.get(id=id)
+def studentdetail(request, user):
+  
+  x= Person.objects.get(user__email=request.user)
   y=x.bookissue_set.all()
   book=x.requestbook_set.all()
   b =x.bookissue_set.count()
+  print(x)
+
   context ={
-    'student':student,
     'y':y,
     'b': b,
-    'book':book
+    'book':book,
+    'x':x,
   }
   return render(request, 'libraryv2/studentdetail.html',context)
-
 
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin'])

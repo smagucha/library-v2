@@ -20,9 +20,6 @@
             <th>Author</th>
             <th>available books</th>
             <th>books issued</th>
-            <th>lost</th>
-            <th>remaining</th>
-            <th>reversed</th>
             <th>Update</th>
             <th>delete</th>
             </thead>
@@ -40,9 +37,6 @@
             <td> {{query.authors}}</td>
             <td> {{query.availablebook}}</td>
             <td>{{query.givenout}}</td>
-            <td>lost</td>
-            <td>reversed</td>
-            <td>remaining</td>
             <td><a href="{% url 'updatebook' query.id %}" class="updatelink">update</a></td>
             <td><a href="{% url 'deletebook' query.id %}" class="deletelink">delete</a></td>
         </tr>

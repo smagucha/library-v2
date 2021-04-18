@@ -8,7 +8,6 @@ from django.db.models.signals import post_save, pre_save
 User = user_model()
 
 class Person(models.Model):
-	#user = models.ForeignKey(User, on_delete=models.CASCADE, null = True)
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null = True)
 	phone =models.PositiveIntegerField()
 	studentid = models.CharField(max_length= 200)
