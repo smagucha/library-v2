@@ -50,7 +50,7 @@ def allbook(request):
   return render(request, 'libraryv2/list_books.html', context)
 
 @login_required(login_url='/accounts/login/')
-#@allowed_users(allowed_roles=['Groupadmin'])
+@allowed_users(allowed_roles=['Groupadmin'])
 def DeleteBook(request, id):
   delobj =Book.objects.get(id=id)
   if request.method == 'POST':
@@ -195,25 +195,16 @@ def Issuebookupdate(request, id):
 @allowed_users(allowed_roles=['Groupadmin','Grouplibrarian'])
 def Issuedbooks(request):
     query =Bookissue.objects.all()
-
     return render(request, 'libraryv2/issuedbooks.html', {'query': query})
- 
 
-
-def sammy(request, email):
-  u = User.objects.get(email=request.user)
-  return render(request, 'libraryv2/sammy.html')
 
 @login_required(login_url='/accounts/login/')
 @allowed_users(allowed_roles=['Groupadmin','studentgroup'])
 def studentdetail(request, user):
-  
   x= Person.objects.get(user__email=request.user)
   y=x.bookissue_set.all()
   book=x.requestbook_set.all()
   b =x.bookissue_set.count()
-  print(x)
-
   context ={
     'y':y,
     'b': b,

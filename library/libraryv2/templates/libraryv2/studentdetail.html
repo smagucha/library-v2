@@ -4,7 +4,7 @@
 <link href="{% static 'css/table.css'%}" rel="stylesheet">
 <h1>student personal details</h1>
    your email: {{user}}
-	<h1>books award</h1>
+	<h1>books given</h1>
 <h3>you have been {{b}} books from the libary</h3><br>
 <table class="table">
     <thead class="text-primary">
@@ -19,7 +19,7 @@
        
     	{%for y in y%}
         <tr>
-            <td>  {{forloop.counter}}</td>
+            <td> {{forloop.counter}}</td>
             <td> {{y.book}}</td>
             <td> {{y.given_date}}</td>
             <td> {{y.due_date}}</td>
@@ -49,7 +49,6 @@
     </tbody>
 </table><br>  
 
-{%for student in student%}
-<a href="{% url 'requestbook' student.id %}" class="button">request book</a>
-{%endfor%}
+<a href="{% url 'requestbook' x.id %}" class="button">request book</a>
+
 {%endblock%}
