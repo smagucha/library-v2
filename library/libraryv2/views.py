@@ -87,7 +87,7 @@ def Addbookcatergory(request):
     if form.is_valid():
       form.save()
       form = BookCatergoryForm()
-      return render(request, 'libraryv2/Addbookcatergory.html')
+      return redirect('allbooks')
   else:
     form = BookCatergoryForm()
   return render(request, 'libraryv2/Addbookcatergory.html', {'form': form})
