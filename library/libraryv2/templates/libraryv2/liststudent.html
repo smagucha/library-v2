@@ -1,8 +1,11 @@
 {% extends 'libraryv2/base.html' %}
 {% load static %}
+{% load custom_tags %}
 {%block content%}
 <link href="{% static 'css/table.css'%}" rel="stylesheet">
+{% if request.user|has_group:"Groupadmin" %}
 <a href="addstudent" class="button">add student</a>
+{%endif%}
     <form>
         <input type="text" name="q" placeholder="search" class='search'>
     </form><br>
@@ -14,9 +17,10 @@
             <th>student</th>
             <th>phone</th>
             <th>student id</th>
+            {% if request.user|has_group:"Groupadmin" %}
             <th>Update</th>
             <th>delete</th>
-
+            {%endif%}
         </tr>
     </thead>
     <tbody>
@@ -27,8 +31,10 @@
             <td> {{obj.user}}</td>
             <td> {{obj.phone}}</td>
             <td> {{obj.studentid}}</td>
-                <td><a href=" {% url 'updatestudent' obj.id %}" class="updatelink">update</a></td>
-                <td><a href="{% url 'deletestudent' obj.id %}" class="deletelink">delete</a></td>
+            {% if request.user|has_group:"Groupadmin" %}
+            <td><a href=" {% url 'updatestudent' obj.id %}" class="updatelink">update</a></td>
+            <td><a href="{% url 'deletestudent' obj.id %}" class="deletelink">delete</a></td>
+            {% endif %}
         </tr>
          {% endfor %}
     </tbody>

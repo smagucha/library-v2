@@ -1,4 +1,5 @@
 {%load static%}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -34,8 +35,21 @@
           </div> -->
         </a>
       </div>
+      {% load custom_tags %}
       <div class="sidebar-wrapper">
         <ul class="nav">
+          {% if request.user|has_group:"studentgroup" %}
+          <li class="active ">
+            <a href="{% url '' %}">
+              <p>Dashboard</p>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'studentdetail' user.email %}">
+              <p> student details</p>
+            </a>
+          </li>
+          {% elif request.user|has_group:"Grouplibrarian" %}
           <li class="active ">
             <a href="{% url '' %}">
               <p>Dashboard</p>
@@ -48,7 +62,35 @@
           </li>
            <li>
             <a href="{% url 'liststudent' %}">
-              
+              <p>student</p>
+            </a>
+          </li>
+          <li>
+            <a href="{% url 'Issuedbooks' %}">
+              <p>issued books</p>
+            </a>
+          </li>      
+          <li>
+            <a href="{% url 'requestedbooks' %}">
+              <p>request books</p>
+            </a>
+          </li>
+          <li>
+            <a href="">Current user</a><p>{{ user.email }}</p>  
+          </li>
+          {% elif request.user|has_group:"Groupadmin" %}
+             <li class="active ">
+            <a href="{% url '' %}">
+              <p>Dashboard</p>
+            </a>
+          </li>
+           <li>
+            <a href="{% url 'allbooks' %}">
+              <p>Books</p>
+            </a>
+          </li>
+           <li>
+            <a href="{% url 'liststudent' %}">
               <p>student</p>
             </a>
           </li>
@@ -57,11 +99,7 @@
               <p>issued books</p>
             </a>
           </li>
-          <li>
-            <a href="{% url 'studentdetail' user.email %}">
-              <p> student details</p>
-            </a>
-          </li>
+          
           <li>
             <a href="{% url 'librarianlist' %}">
               <p>librarians</p>
@@ -74,10 +112,9 @@
             </a>
           </li>
           <li>
-            {% if user.is_authenticated %}
-            <a href="">Current user</a><p>{{ user.email }}</p>
-            {%endif%}   
+            <a href="">Current user</a><p>{{ user.email }}</p>  
           </li>
+          {% endif %}
         </ul>
       </div>
     </div>
