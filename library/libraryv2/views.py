@@ -151,14 +151,23 @@ def deletestudent(request, id):
 def Issuebook(request, id):
   book_id = Book.objects.get(id=id)
   if request.method =='POST':
-    form= Issueform(request.POST)
-    if form.is_valid():
-      book_id.availablebook -= 1
-      book_id.givenout += 1
-      book_id.save()
-      form.save()
-      form =Issueform()
-      return redirect('Issuedbooks')
+    form= Issueform(request.POST) 
+    x = request.POST.get('student') 
+    book=int(request.POST.get('book')) 
+    bookis = Book.objects.get(id = book)
+    boo = Bookissue.objects.filter(student = x).count()
+    if boo >= 3 and bookis.availablebook:
+      return HttpResponse('you cant  be given another book')
+    elif bookis.availablebook <=0 :
+      return HttpResponse('the book is out of stock')
+    else:
+      if form.is_valid():
+        book_id.availablebook -= 1
+        book_id.givenout += 1
+        book_id.save()
+        form.save()
+        form =Issueform()
+        return redirect('Issuedbooks')
   else:
     form = Issueform()
   return render(request, 'libraryv2/issuebook.html',{'form': form})

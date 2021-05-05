@@ -33,8 +33,6 @@ class BookCatergory(models.Model):
 
 	class Meta:
 		verbose_name_plural = "BookCategories"
-
-
 class Book(models.Model):
 	HARDCOVER='HARDCOVER'
 	PAPERBACK= 'PAPERBACK'
@@ -64,7 +62,6 @@ class Book(models.Model):
 
 	def __str__(self):
  		return self.title
-
 
 class Bookissue(models.Model):
 	student= models.ForeignKey(Person, on_delete=models.CASCADE)
