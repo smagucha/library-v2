@@ -100,7 +100,7 @@ def addstudent(request):
     if form.is_valid():
       form.save()
       form = StudentForm()
-    return render(request,'libraryv2/addstudent.html',{'form': form})
+      return redirect('liststudent')
   else:
     form = StudentForm()
   return render(request,'libraryv2/addstudent.html',{'form': form})
@@ -233,7 +233,7 @@ def Addlibrarian(request):
       return redirect('librarianlist')
   else:
     form = Librarianform()
-    return render(request, 'libraryv2/addlibrarian.html', {'form': form})
+  return render(request, 'libraryv2/addlibrarian.html', {'form': form})
 
 
 @login_required(login_url='/accounts/login/')

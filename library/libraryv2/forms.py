@@ -17,6 +17,13 @@ class StudentForm(ModelForm):
 		model = Person
 		fields = '__all__'
 
+	def clean_user(self):
+		user = self.cleaned_data.get('user')
+		for instance in Person.objects.all():
+			if instance.user == user:
+				raise forms.ValidationError('We have a student with the same details', user)
+		return user
+
 class Issueform(ModelForm):
 	class Meta:
 		model = Bookissue
@@ -26,6 +33,12 @@ class Librarianform(ModelForm):
 	class Meta:
 		model = Librarian
 		fields ='__all__'
+
+	def clean_user(self):
+		user = self.cleaned_data.get('user')
+		for instance in Librarian.objects.all():
+			if instance.user == user:
+				raise forms.ValidationError('We have a librarian with the same details', user)
 
 class requestbookform(forms.ModelForm):
 	class Meta:
