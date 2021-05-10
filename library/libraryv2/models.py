@@ -4,17 +4,31 @@ from django.db import models
 from django.conf import settings
 from django.dispatch import receiver
 from django.db.models.signals import post_save, pre_save
+from django.core.exceptions import ValidationError
 
 User = user_model()
 
+# def validate_age(value):
+# 	if value < 18:
+#         raise ValidationError(
+#             ('Age must be at least 18.'),
+#             params={'value': value},
+#         )
+#  validators=[validate_age]
+
+# def validateuser(value):
+# 		usergroup = Group.objects.filter(name = 'studentgroup')
+# 		if user in usergroup:
+# 			return user 
+
 class Person(models.Model):
-	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null = True,)
+	user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, null = True)
 	phone =models.PositiveIntegerField()
 	studentid = models.CharField(max_length= 200)
 
 	def __str__(self):
-		return str(self.user)
-
+		return str(self.user)	
+		
 class Librarian(models.Model):
 	user = models.ForeignKey(settings.AUTH_USER_MODEL, models.CASCADE,  null = True, )
 	phone =models.PositiveIntegerField()
