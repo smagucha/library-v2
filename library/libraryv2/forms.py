@@ -5,7 +5,7 @@ from django.contrib.auth.models import Group
 from django.contrib.auth import get_user_model
 
 #User.objects.filter(groups__name='monkeys')
-
+User = get_user_model()
 class DateInput(forms.DateInput):
     input_type = 'date'
 
@@ -28,17 +28,45 @@ class StudentForm(ModelForm):
 
 
 	def clean_user(self):
-		usergroup = Group.objects.filter(name = 'studentgroup')
+		usergroup = User.objects.filter(groups__name='studentgroup')
 		user = self.cleaned_data.get('user')
-		if user in usergroup:
-			#User = get_user_model()
-			return user #User.objects.filter(groups__name='studentgroup')
-		else:
-			raise forms.ValidationError('user is not a student')
+		print(user)
+
+		# if user not in usergroup:
+		# 	raise forms.ValidationError('user is not a student')
+		# else:
 		for instance in Person.objects.all() :
 			if instance.user == user:
 				raise forms.ValidationError('We have a student with the same details')
+				print(instance.user)
+			else:
+				return user
+				print(instance.user)
 		return user
+
+		def clean_studentid(self):
+			Studentid = self.cleaned_data.get('studentid')
+			print(Studentid)
+			for instance in Person.objects.all() :
+				if instance.studentid == Studentid:
+					raise forms.ValidationError('We have a student with the same ID')
+					print(instance.studentid)
+				else:
+					return Studentid
+					print(instance.studentid)
+			return Studentid
+
+		def clean_phone(self):
+			Phone = self.cleaned_data.get('Phone')
+			print(Phone)
+			for instance in Person.objects.all() :
+				if instance.phone == Phone:
+					raise forms.ValidationError('We have a student with the same phone number')
+					print(instance.phone)
+				else:
+					return Phone
+					print(instance.user)
+			return Phone
 
 
 class Issueform(ModelForm):
